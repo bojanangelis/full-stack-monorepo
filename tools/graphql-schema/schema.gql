@@ -1,0 +1,144 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type UserCountAggregate {
+  id: Int!
+  email: Int!
+  name: Int!
+  _all: Int!
+}
+
+type UserMaxAggregate {
+  id: String
+  email: String
+  name: String
+}
+
+type UserMinAggregate {
+  id: String
+  email: String
+  name: String
+}
+
+type User {
+  id: ID!
+  email: String!
+  name: String
+}
+
+type Query {
+  users: [User!]!
+  findOne(where: UserWhereUniqueInput!): User!
+}
+
+input UserWhereUniqueInput {
+  id: String
+  email: String
+  AND: [UserWhereInput!]
+  OR: [UserWhereInput!]
+  NOT: [UserWhereInput!]
+  name: StringNullableFilter
+  password: StringFilter
+}
+
+input UserWhereInput {
+  AND: [UserWhereInput!]
+  OR: [UserWhereInput!]
+  NOT: [UserWhereInput!]
+  id: StringFilter
+  email: StringFilter
+  name: StringNullableFilter
+  password: StringFilter
+}
+
+input StringFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  mode: QueryMode
+  not: NestedStringFilter
+}
+
+enum QueryMode {
+  default
+  insensitive
+}
+
+input NestedStringFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: NestedStringFilter
+}
+
+input StringNullableFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  mode: QueryMode
+  not: NestedStringNullableFilter
+}
+
+input NestedStringNullableFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: NestedStringNullableFilter
+}
+
+type Mutation {
+  createUser(data: UserCreateInput!): User!
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User!
+  removeUser(where: UserWhereUniqueInput!): User!
+}
+
+input UserCreateInput {
+  id: String
+  email: String!
+  name: String
+  password: String!
+}
+
+input UserUpdateInput {
+  id: StringFieldUpdateOperationsInput
+  email: StringFieldUpdateOperationsInput
+  name: NullableStringFieldUpdateOperationsInput
+  password: StringFieldUpdateOperationsInput
+}
+
+input StringFieldUpdateOperationsInput {
+  set: String
+}
+
+input NullableStringFieldUpdateOperationsInput {
+  set: String
+}
