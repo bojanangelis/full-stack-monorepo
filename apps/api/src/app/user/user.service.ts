@@ -4,7 +4,7 @@ import {
   CreateOneUserArgs,
   DeleteOneUserArgs,
   FindUniqueUserArgs,
-  UpdateOneUserArgs,
+  UpdateOneUserArgs
 } from '@full-stack/api/generated-db-types';
 import * as bcrypt from 'bcrypt';
 
@@ -25,7 +25,7 @@ export class UserService {
     const saltOrRounds = 10;
     const hashedPassword = await bcrypt.hash(data.password, saltOrRounds);
     return this.prisma.user.create({
-      data: { ...data, password: hashedPassword },
+      data: { ...data, password: hashedPassword }
     });
   }
 
