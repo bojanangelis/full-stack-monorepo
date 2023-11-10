@@ -20,6 +20,9 @@
       ],
       "@full-stack/api/generated-db-types": [
         "libs/api/generated-db-types/src/index.ts"
+      ],
+      "@full-stack/web/data-access-graphql": [
+        "libs/web/data-access-graphql/src/index.ts"
       ]
     }
   },
