@@ -3,13 +3,26 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "serve:all": "npx concurrently --kill-others-on-fail \"yarn:start:*\"",
+    "------START------": "------------",
+    "start:verify-env": "yarn run validate:web-env && yarn run validate:api-env",
+    "start:db:watch": "yarn run db:docker && yarn run db:migrate:dev && yarn run db:seed:dev && prisma generate --watch",
+    "start:gql:watch": "graphql-codegen --config codegen.yml --watch",
     "start:api": "nx serve api",
     "start:web": "nx serve web",
+    "------NX SECTION------": "------------",
+    "build": "nx build",
+    "test": "nx test",
+    "------DB SECTION------": "------------",
     "db:docker": "npx env-cmd -f .env docker-compose -f tools/docker/dev.docker-compose.yml up -d --no-recreate --remove-orphans",
     "db:migrate:dev": "npx env-cmd -f .env npx prisma migrate dev",
     "db:studio": "npx env-cmd -f .env npx prisma studio",
-    "gen:gql-client": "graphql-codegen --config codegen.yml --watch",
-    "verify": "nx show projects && nx format:write && nx format:check && nx affected --target=lint --fix --parallel=3 && npx nx affected --target=test --parallel=3 && nx affected --target=build --parallel=3 --exclude=web"
+    "db:seed:clear": "npx env-cmd -f .env ts-node --project tools/tsconfig.tools.json tools/database/seed-clear-database.ts",
+    "db:seed:dev": "npx env-cmd -f .env ts-node --project tools/tsconfig.tools.json tools/database/seed.dev.ts",
+    "------VALIDATE ENV SECTION------": "------------",
+    "verify": "nx show projects && nx format:write && nx format:check && nx affected --target=lint --fix --parallel=3 && npx nx affected --target=test --parallel=3 && nx affected --target=build --parallel=3 --exclude=web",
+    "validate:web-env": "npx env-cmd -f .env ts-node --project tools/tsconfig.tools.json tools/environment/validate-web-env.ts",
+    "validate:api-env": "npx env-cmd -f .env ts-node --project tools/tsconfig.tools.json tools/environment/validate-api-env.ts"
   },
   "prisma": {
     "schema": "libs/api/data-access-db/src/lib/prisma/schema.prisma"
