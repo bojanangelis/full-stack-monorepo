@@ -11,6 +11,16 @@ const nextConfig = {
     // Set this to true if you would like to use SVGR
     // See: https://github.com/gregberge/svgr
     svgr: false
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname:
+          process.env.FULL_STACK_WEB_STORAGE_ENDPOINT ||
+          'full-stack-monorepo.fra1.cdn.digitaloceanspaces.com'
+      }
+    ]
   }
 };
 

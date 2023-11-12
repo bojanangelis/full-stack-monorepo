@@ -1,20 +1,30 @@
 import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
-import { Int } from '@nestjs/graphql';
-import { InputType } from '@nestjs/graphql';
-import { registerEnumType } from '@nestjs/graphql';
 import { ArgsType } from '@nestjs/graphql';
 import { Type } from 'class-transformer';
+import { ValidateNested } from 'class-validator';
 import { Prisma } from '@prisma/client';
-import { HideField } from '@nestjs/graphql';
+import { Int } from '@nestjs/graphql';
+import { InputType } from '@nestjs/graphql';
 import * as Validator from 'class-validator';
+import { registerEnumType } from '@nestjs/graphql';
 import { ID } from '@nestjs/graphql';
+import { Float } from '@nestjs/graphql';
+import { HideField } from '@nestjs/graphql';
 
 export enum UserScalarFieldEnum {
     id = "id",
     email = "email",
     name = "name",
     password = "password"
+}
+
+export enum RgbBackgroundScalarFieldEnum {
+    id = "id",
+    r = "r",
+    g = "g",
+    b = "b",
+    a = "a"
 }
 
 export enum TransactionIsolationLevel {
@@ -39,11 +49,872 @@ export enum NullsOrder {
     last = "last"
 }
 
+export enum HomeBlockScalarFieldEnum {
+    id = "id",
+    title = "title",
+    imagePath = "imagePath",
+    navigationPath = "navigationPath",
+    rgbBackgroundId = "rgbBackgroundId"
+}
+
+registerEnumType(HomeBlockScalarFieldEnum, { name: 'HomeBlockScalarFieldEnum', description: undefined })
 registerEnumType(NullsOrder, { name: 'NullsOrder', description: undefined })
 registerEnumType(QueryMode, { name: 'QueryMode', description: undefined })
 registerEnumType(SortOrder, { name: 'SortOrder', description: undefined })
 registerEnumType(TransactionIsolationLevel, { name: 'TransactionIsolationLevel', description: undefined })
+registerEnumType(RgbBackgroundScalarFieldEnum, { name: 'RgbBackgroundScalarFieldEnum', description: undefined })
 registerEnumType(UserScalarFieldEnum, { name: 'UserScalarFieldEnum', description: undefined })
+
+@ObjectType()
+export class AggregateHomeBlock {
+    @Field(() => HomeBlockCountAggregate, {nullable:true})
+    _count?: InstanceType<typeof HomeBlockCountAggregate>;
+    @Field(() => HomeBlockMinAggregate, {nullable:true})
+    _min?: InstanceType<typeof HomeBlockMinAggregate>;
+    @Field(() => HomeBlockMaxAggregate, {nullable:true})
+    _max?: InstanceType<typeof HomeBlockMaxAggregate>;
+}
+
+@ArgsType()
+export class CreateManyHomeBlockArgs {
+    @Field(() => [HomeBlockCreateManyInput], {nullable:false})
+    @Type(() => HomeBlockCreateManyInput)
+    @ValidateNested()
+    data!: Array<HomeBlockCreateManyInput>;
+    @Field(() => Boolean, {nullable:true})
+    skipDuplicates?: boolean;
+}
+
+@ArgsType()
+export class CreateOneHomeBlockArgs {
+    @Field(() => HomeBlockCreateInput, {nullable:false})
+    @Type(() => HomeBlockCreateInput)
+    @ValidateNested()
+    data!: InstanceType<typeof HomeBlockCreateInput>;
+}
+
+@ArgsType()
+export class DeleteManyHomeBlockArgs {
+    @Field(() => HomeBlockWhereInput, {nullable:true})
+    @Type(() => HomeBlockWhereInput)
+    @ValidateNested()
+    where?: InstanceType<typeof HomeBlockWhereInput>;
+}
+
+@ArgsType()
+export class DeleteOneHomeBlockArgs {
+    @Field(() => HomeBlockWhereUniqueInput, {nullable:false})
+    @Type(() => HomeBlockWhereUniqueInput)
+    @ValidateNested()
+    where!: Prisma.AtLeast<HomeBlockWhereUniqueInput, 'id' | 'rgbBackgroundId'>;
+}
+
+@ArgsType()
+export class FindFirstHomeBlockOrThrowArgs {
+    @Field(() => HomeBlockWhereInput, {nullable:true})
+    @Type(() => HomeBlockWhereInput)
+    @ValidateNested()
+    where?: InstanceType<typeof HomeBlockWhereInput>;
+    @Field(() => [HomeBlockOrderByWithRelationInput], {nullable:true})
+    orderBy?: Array<HomeBlockOrderByWithRelationInput>;
+    @Field(() => HomeBlockWhereUniqueInput, {nullable:true})
+    cursor?: Prisma.AtLeast<HomeBlockWhereUniqueInput, 'id' | 'rgbBackgroundId'>;
+    @Field(() => Int, {nullable:true})
+    take?: number;
+    @Field(() => Int, {nullable:true})
+    skip?: number;
+    @Field(() => [HomeBlockScalarFieldEnum], {nullable:true})
+    distinct?: Array<keyof typeof HomeBlockScalarFieldEnum>;
+}
+
+@ArgsType()
+export class FindFirstHomeBlockArgs {
+    @Field(() => HomeBlockWhereInput, {nullable:true})
+    @Type(() => HomeBlockWhereInput)
+    @ValidateNested()
+    where?: InstanceType<typeof HomeBlockWhereInput>;
+    @Field(() => [HomeBlockOrderByWithRelationInput], {nullable:true})
+    orderBy?: Array<HomeBlockOrderByWithRelationInput>;
+    @Field(() => HomeBlockWhereUniqueInput, {nullable:true})
+    cursor?: Prisma.AtLeast<HomeBlockWhereUniqueInput, 'id' | 'rgbBackgroundId'>;
+    @Field(() => Int, {nullable:true})
+    take?: number;
+    @Field(() => Int, {nullable:true})
+    skip?: number;
+    @Field(() => [HomeBlockScalarFieldEnum], {nullable:true})
+    distinct?: Array<keyof typeof HomeBlockScalarFieldEnum>;
+}
+
+@ArgsType()
+export class FindManyHomeBlockArgs {
+    @Field(() => HomeBlockWhereInput, {nullable:true})
+    @Type(() => HomeBlockWhereInput)
+    @ValidateNested()
+    where?: InstanceType<typeof HomeBlockWhereInput>;
+    @Field(() => [HomeBlockOrderByWithRelationInput], {nullable:true})
+    orderBy?: Array<HomeBlockOrderByWithRelationInput>;
+    @Field(() => HomeBlockWhereUniqueInput, {nullable:true})
+    cursor?: Prisma.AtLeast<HomeBlockWhereUniqueInput, 'id' | 'rgbBackgroundId'>;
+    @Field(() => Int, {nullable:true})
+    take?: number;
+    @Field(() => Int, {nullable:true})
+    skip?: number;
+    @Field(() => [HomeBlockScalarFieldEnum], {nullable:true})
+    distinct?: Array<keyof typeof HomeBlockScalarFieldEnum>;
+}
+
+@ArgsType()
+export class FindUniqueHomeBlockOrThrowArgs {
+    @Field(() => HomeBlockWhereUniqueInput, {nullable:false})
+    @Type(() => HomeBlockWhereUniqueInput)
+    @ValidateNested()
+    where!: Prisma.AtLeast<HomeBlockWhereUniqueInput, 'id' | 'rgbBackgroundId'>;
+}
+
+@ArgsType()
+export class FindUniqueHomeBlockArgs {
+    @Field(() => HomeBlockWhereUniqueInput, {nullable:false})
+    @Type(() => HomeBlockWhereUniqueInput)
+    @ValidateNested()
+    where!: Prisma.AtLeast<HomeBlockWhereUniqueInput, 'id' | 'rgbBackgroundId'>;
+}
+
+@ArgsType()
+export class HomeBlockAggregateArgs {
+    @Field(() => HomeBlockWhereInput, {nullable:true})
+    @Type(() => HomeBlockWhereInput)
+    @ValidateNested()
+    where?: InstanceType<typeof HomeBlockWhereInput>;
+    @Field(() => [HomeBlockOrderByWithRelationInput], {nullable:true})
+    orderBy?: Array<HomeBlockOrderByWithRelationInput>;
+    @Field(() => HomeBlockWhereUniqueInput, {nullable:true})
+    cursor?: Prisma.AtLeast<HomeBlockWhereUniqueInput, 'id' | 'rgbBackgroundId'>;
+    @Field(() => Int, {nullable:true})
+    take?: number;
+    @Field(() => Int, {nullable:true})
+    skip?: number;
+    @Field(() => HomeBlockCountAggregateInput, {nullable:true})
+    _count?: InstanceType<typeof HomeBlockCountAggregateInput>;
+    @Field(() => HomeBlockMinAggregateInput, {nullable:true})
+    _min?: InstanceType<typeof HomeBlockMinAggregateInput>;
+    @Field(() => HomeBlockMaxAggregateInput, {nullable:true})
+    _max?: InstanceType<typeof HomeBlockMaxAggregateInput>;
+}
+
+@InputType()
+export class HomeBlockCountAggregateInput {
+    @Field(() => Boolean, {nullable:true})
+    id?: true;
+    @Field(() => Boolean, {nullable:true})
+    title?: true;
+    @Field(() => Boolean, {nullable:true})
+    imagePath?: true;
+    @Field(() => Boolean, {nullable:true})
+    navigationPath?: true;
+    @Field(() => Boolean, {nullable:true})
+    rgbBackgroundId?: true;
+    @Field(() => Boolean, {nullable:true})
+    _all?: true;
+}
+
+@ObjectType()
+export class HomeBlockCountAggregate {
+    @Field(() => Int, {nullable:false})
+    id!: number;
+    @Field(() => Int, {nullable:false})
+    title!: number;
+    @Field(() => Int, {nullable:false})
+    imagePath!: number;
+    @Field(() => Int, {nullable:false})
+    navigationPath!: number;
+    @Field(() => Int, {nullable:false})
+    rgbBackgroundId!: number;
+    @Field(() => Int, {nullable:false})
+    _all!: number;
+}
+
+@InputType()
+export class HomeBlockCountOrderByAggregateInput {
+    @Field(() => SortOrder, {nullable:true})
+    id?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    title?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    imagePath?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    navigationPath?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    rgbBackgroundId?: keyof typeof SortOrder;
+}
+
+@InputType()
+export class HomeBlockCreateManyInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title!: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath!: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    navigationPath!: string;
+    @Field(() => String, {nullable:false})
+    rgbBackgroundId!: string;
+}
+
+@InputType()
+export class HomeBlockCreateNestedOneWithoutRgbBackgroundInput {
+    @Field(() => HomeBlockCreateWithoutRgbBackgroundInput, {nullable:true})
+    @Type(() => HomeBlockCreateWithoutRgbBackgroundInput)
+    create?: InstanceType<typeof HomeBlockCreateWithoutRgbBackgroundInput>;
+    @Field(() => HomeBlockCreateOrConnectWithoutRgbBackgroundInput, {nullable:true})
+    @Type(() => HomeBlockCreateOrConnectWithoutRgbBackgroundInput)
+    connectOrCreate?: InstanceType<typeof HomeBlockCreateOrConnectWithoutRgbBackgroundInput>;
+    @Field(() => HomeBlockWhereUniqueInput, {nullable:true})
+    @Type(() => HomeBlockWhereUniqueInput)
+    connect?: Prisma.AtLeast<HomeBlockWhereUniqueInput, 'id' | 'rgbBackgroundId'>;
+}
+
+@InputType()
+export class HomeBlockCreateOrConnectWithoutRgbBackgroundInput {
+    @Field(() => HomeBlockWhereUniqueInput, {nullable:false})
+    @Type(() => HomeBlockWhereUniqueInput)
+    where!: Prisma.AtLeast<HomeBlockWhereUniqueInput, 'id' | 'rgbBackgroundId'>;
+    @Field(() => HomeBlockCreateWithoutRgbBackgroundInput, {nullable:false})
+    @Type(() => HomeBlockCreateWithoutRgbBackgroundInput)
+    create!: InstanceType<typeof HomeBlockCreateWithoutRgbBackgroundInput>;
+}
+
+@InputType()
+export class HomeBlockCreateWithoutRgbBackgroundInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title!: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath!: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    navigationPath!: string;
+}
+
+@InputType()
+export class HomeBlockCreateInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title!: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath!: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    navigationPath!: string;
+    @Field(() => RgbBackgroundCreateNestedOneWithoutHomeBlockInput, {nullable:false})
+    rgbBackground!: InstanceType<typeof RgbBackgroundCreateNestedOneWithoutHomeBlockInput>;
+}
+
+@ArgsType()
+export class HomeBlockGroupByArgs {
+    @Field(() => HomeBlockWhereInput, {nullable:true})
+    @Type(() => HomeBlockWhereInput)
+    @ValidateNested()
+    where?: InstanceType<typeof HomeBlockWhereInput>;
+    @Field(() => [HomeBlockOrderByWithAggregationInput], {nullable:true})
+    orderBy?: Array<HomeBlockOrderByWithAggregationInput>;
+    @Field(() => [HomeBlockScalarFieldEnum], {nullable:false})
+    by!: Array<keyof typeof HomeBlockScalarFieldEnum>;
+    @Field(() => HomeBlockScalarWhereWithAggregatesInput, {nullable:true})
+    having?: InstanceType<typeof HomeBlockScalarWhereWithAggregatesInput>;
+    @Field(() => Int, {nullable:true})
+    take?: number;
+    @Field(() => Int, {nullable:true})
+    skip?: number;
+    @Field(() => HomeBlockCountAggregateInput, {nullable:true})
+    _count?: InstanceType<typeof HomeBlockCountAggregateInput>;
+    @Field(() => HomeBlockMinAggregateInput, {nullable:true})
+    _min?: InstanceType<typeof HomeBlockMinAggregateInput>;
+    @Field(() => HomeBlockMaxAggregateInput, {nullable:true})
+    _max?: InstanceType<typeof HomeBlockMaxAggregateInput>;
+}
+
+@ObjectType()
+export class HomeBlockGroupBy {
+    @Field(() => String, {nullable:false})
+    id!: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title!: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath!: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    navigationPath!: string;
+    @Field(() => String, {nullable:false})
+    rgbBackgroundId!: string;
+    @Field(() => HomeBlockCountAggregate, {nullable:true})
+    _count?: InstanceType<typeof HomeBlockCountAggregate>;
+    @Field(() => HomeBlockMinAggregate, {nullable:true})
+    _min?: InstanceType<typeof HomeBlockMinAggregate>;
+    @Field(() => HomeBlockMaxAggregate, {nullable:true})
+    _max?: InstanceType<typeof HomeBlockMaxAggregate>;
+}
+
+@InputType()
+export class HomeBlockMaxAggregateInput {
+    @Field(() => Boolean, {nullable:true})
+    id?: true;
+    @Field(() => Boolean, {nullable:true})
+    title?: true;
+    @Field(() => Boolean, {nullable:true})
+    imagePath?: true;
+    @Field(() => Boolean, {nullable:true})
+    navigationPath?: true;
+    @Field(() => Boolean, {nullable:true})
+    rgbBackgroundId?: true;
+}
+
+@ObjectType()
+export class HomeBlockMaxAggregate {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    navigationPath?: string;
+    @Field(() => String, {nullable:true})
+    rgbBackgroundId?: string;
+}
+
+@InputType()
+export class HomeBlockMaxOrderByAggregateInput {
+    @Field(() => SortOrder, {nullable:true})
+    id?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    title?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    imagePath?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    navigationPath?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    rgbBackgroundId?: keyof typeof SortOrder;
+}
+
+@InputType()
+export class HomeBlockMinAggregateInput {
+    @Field(() => Boolean, {nullable:true})
+    id?: true;
+    @Field(() => Boolean, {nullable:true})
+    title?: true;
+    @Field(() => Boolean, {nullable:true})
+    imagePath?: true;
+    @Field(() => Boolean, {nullable:true})
+    navigationPath?: true;
+    @Field(() => Boolean, {nullable:true})
+    rgbBackgroundId?: true;
+}
+
+@ObjectType()
+export class HomeBlockMinAggregate {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    navigationPath?: string;
+    @Field(() => String, {nullable:true})
+    rgbBackgroundId?: string;
+}
+
+@InputType()
+export class HomeBlockMinOrderByAggregateInput {
+    @Field(() => SortOrder, {nullable:true})
+    id?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    title?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    imagePath?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    navigationPath?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    rgbBackgroundId?: keyof typeof SortOrder;
+}
+
+@InputType()
+export class HomeBlockOrderByWithAggregationInput {
+    @Field(() => SortOrder, {nullable:true})
+    id?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    title?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    imagePath?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    navigationPath?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    rgbBackgroundId?: keyof typeof SortOrder;
+    @Field(() => HomeBlockCountOrderByAggregateInput, {nullable:true})
+    _count?: InstanceType<typeof HomeBlockCountOrderByAggregateInput>;
+    @Field(() => HomeBlockMaxOrderByAggregateInput, {nullable:true})
+    _max?: InstanceType<typeof HomeBlockMaxOrderByAggregateInput>;
+    @Field(() => HomeBlockMinOrderByAggregateInput, {nullable:true})
+    _min?: InstanceType<typeof HomeBlockMinOrderByAggregateInput>;
+}
+
+@InputType()
+export class HomeBlockOrderByWithRelationInput {
+    @Field(() => SortOrder, {nullable:true})
+    id?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    title?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    imagePath?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    navigationPath?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    rgbBackgroundId?: keyof typeof SortOrder;
+    @Field(() => RgbBackgroundOrderByWithRelationInput, {nullable:true})
+    rgbBackground?: InstanceType<typeof RgbBackgroundOrderByWithRelationInput>;
+}
+
+@InputType()
+export class HomeBlockRelationFilter {
+    @Field(() => HomeBlockWhereInput, {nullable:true})
+    is?: InstanceType<typeof HomeBlockWhereInput>;
+    @Field(() => HomeBlockWhereInput, {nullable:true})
+    isNot?: InstanceType<typeof HomeBlockWhereInput>;
+}
+
+@InputType()
+export class HomeBlockScalarWhereWithAggregatesInput {
+    @Field(() => [HomeBlockScalarWhereWithAggregatesInput], {nullable:true})
+    AND?: Array<HomeBlockScalarWhereWithAggregatesInput>;
+    @Field(() => [HomeBlockScalarWhereWithAggregatesInput], {nullable:true})
+    OR?: Array<HomeBlockScalarWhereWithAggregatesInput>;
+    @Field(() => [HomeBlockScalarWhereWithAggregatesInput], {nullable:true})
+    NOT?: Array<HomeBlockScalarWhereWithAggregatesInput>;
+    @Field(() => StringWithAggregatesFilter, {nullable:true})
+    id?: InstanceType<typeof StringWithAggregatesFilter>;
+    @Field(() => StringWithAggregatesFilter, {nullable:true})
+    title?: InstanceType<typeof StringWithAggregatesFilter>;
+    @Field(() => StringWithAggregatesFilter, {nullable:true})
+    imagePath?: InstanceType<typeof StringWithAggregatesFilter>;
+    @Field(() => StringWithAggregatesFilter, {nullable:true})
+    navigationPath?: InstanceType<typeof StringWithAggregatesFilter>;
+    @Field(() => StringWithAggregatesFilter, {nullable:true})
+    rgbBackgroundId?: InstanceType<typeof StringWithAggregatesFilter>;
+}
+
+@InputType()
+export class HomeBlockUncheckedCreateNestedOneWithoutRgbBackgroundInput {
+    @Field(() => HomeBlockCreateWithoutRgbBackgroundInput, {nullable:true})
+    @Type(() => HomeBlockCreateWithoutRgbBackgroundInput)
+    create?: InstanceType<typeof HomeBlockCreateWithoutRgbBackgroundInput>;
+    @Field(() => HomeBlockCreateOrConnectWithoutRgbBackgroundInput, {nullable:true})
+    @Type(() => HomeBlockCreateOrConnectWithoutRgbBackgroundInput)
+    connectOrCreate?: InstanceType<typeof HomeBlockCreateOrConnectWithoutRgbBackgroundInput>;
+    @Field(() => HomeBlockWhereUniqueInput, {nullable:true})
+    @Type(() => HomeBlockWhereUniqueInput)
+    connect?: Prisma.AtLeast<HomeBlockWhereUniqueInput, 'id' | 'rgbBackgroundId'>;
+}
+
+@InputType()
+export class HomeBlockUncheckedCreateWithoutRgbBackgroundInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title!: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath!: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    navigationPath!: string;
+}
+
+@InputType()
+export class HomeBlockUncheckedCreateInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title!: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath!: string;
+    @Field(() => String, {nullable:false})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    navigationPath!: string;
+    @Field(() => String, {nullable:false})
+    rgbBackgroundId!: string;
+}
+
+@InputType()
+export class HomeBlockUncheckedUpdateManyInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    navigationPath?: string;
+    @Field(() => String, {nullable:true})
+    rgbBackgroundId?: string;
+}
+
+@InputType()
+export class HomeBlockUncheckedUpdateOneWithoutRgbBackgroundNestedInput {
+    @Field(() => HomeBlockCreateWithoutRgbBackgroundInput, {nullable:true})
+    @Type(() => HomeBlockCreateWithoutRgbBackgroundInput)
+    create?: InstanceType<typeof HomeBlockCreateWithoutRgbBackgroundInput>;
+    @Field(() => HomeBlockCreateOrConnectWithoutRgbBackgroundInput, {nullable:true})
+    @Type(() => HomeBlockCreateOrConnectWithoutRgbBackgroundInput)
+    connectOrCreate?: InstanceType<typeof HomeBlockCreateOrConnectWithoutRgbBackgroundInput>;
+    @Field(() => HomeBlockUpsertWithoutRgbBackgroundInput, {nullable:true})
+    @Type(() => HomeBlockUpsertWithoutRgbBackgroundInput)
+    upsert?: InstanceType<typeof HomeBlockUpsertWithoutRgbBackgroundInput>;
+    @Field(() => HomeBlockWhereInput, {nullable:true})
+    @Type(() => HomeBlockWhereInput)
+    disconnect?: InstanceType<typeof HomeBlockWhereInput>;
+    @Field(() => HomeBlockWhereInput, {nullable:true})
+    @Type(() => HomeBlockWhereInput)
+    delete?: InstanceType<typeof HomeBlockWhereInput>;
+    @Field(() => HomeBlockWhereUniqueInput, {nullable:true})
+    @Type(() => HomeBlockWhereUniqueInput)
+    connect?: Prisma.AtLeast<HomeBlockWhereUniqueInput, 'id' | 'rgbBackgroundId'>;
+    @Field(() => HomeBlockUpdateToOneWithWhereWithoutRgbBackgroundInput, {nullable:true})
+    @Type(() => HomeBlockUpdateToOneWithWhereWithoutRgbBackgroundInput)
+    update?: InstanceType<typeof HomeBlockUpdateToOneWithWhereWithoutRgbBackgroundInput>;
+}
+
+@InputType()
+export class HomeBlockUncheckedUpdateWithoutRgbBackgroundInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    navigationPath?: string;
+}
+
+@InputType()
+export class HomeBlockUncheckedUpdateInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    navigationPath?: string;
+    @Field(() => String, {nullable:true})
+    rgbBackgroundId?: string;
+}
+
+@InputType()
+export class HomeBlockUpdateManyMutationInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    navigationPath?: string;
+}
+
+@InputType()
+export class HomeBlockUpdateOneWithoutRgbBackgroundNestedInput {
+    @Field(() => HomeBlockCreateWithoutRgbBackgroundInput, {nullable:true})
+    @Type(() => HomeBlockCreateWithoutRgbBackgroundInput)
+    create?: InstanceType<typeof HomeBlockCreateWithoutRgbBackgroundInput>;
+    @Field(() => HomeBlockCreateOrConnectWithoutRgbBackgroundInput, {nullable:true})
+    @Type(() => HomeBlockCreateOrConnectWithoutRgbBackgroundInput)
+    connectOrCreate?: InstanceType<typeof HomeBlockCreateOrConnectWithoutRgbBackgroundInput>;
+    @Field(() => HomeBlockUpsertWithoutRgbBackgroundInput, {nullable:true})
+    @Type(() => HomeBlockUpsertWithoutRgbBackgroundInput)
+    upsert?: InstanceType<typeof HomeBlockUpsertWithoutRgbBackgroundInput>;
+    @Field(() => HomeBlockWhereInput, {nullable:true})
+    @Type(() => HomeBlockWhereInput)
+    disconnect?: InstanceType<typeof HomeBlockWhereInput>;
+    @Field(() => HomeBlockWhereInput, {nullable:true})
+    @Type(() => HomeBlockWhereInput)
+    delete?: InstanceType<typeof HomeBlockWhereInput>;
+    @Field(() => HomeBlockWhereUniqueInput, {nullable:true})
+    @Type(() => HomeBlockWhereUniqueInput)
+    connect?: Prisma.AtLeast<HomeBlockWhereUniqueInput, 'id' | 'rgbBackgroundId'>;
+    @Field(() => HomeBlockUpdateToOneWithWhereWithoutRgbBackgroundInput, {nullable:true})
+    @Type(() => HomeBlockUpdateToOneWithWhereWithoutRgbBackgroundInput)
+    update?: InstanceType<typeof HomeBlockUpdateToOneWithWhereWithoutRgbBackgroundInput>;
+}
+
+@InputType()
+export class HomeBlockUpdateToOneWithWhereWithoutRgbBackgroundInput {
+    @Field(() => HomeBlockWhereInput, {nullable:true})
+    @Type(() => HomeBlockWhereInput)
+    where?: InstanceType<typeof HomeBlockWhereInput>;
+    @Field(() => HomeBlockUpdateWithoutRgbBackgroundInput, {nullable:false})
+    @Type(() => HomeBlockUpdateWithoutRgbBackgroundInput)
+    data!: InstanceType<typeof HomeBlockUpdateWithoutRgbBackgroundInput>;
+}
+
+@InputType()
+export class HomeBlockUpdateWithoutRgbBackgroundInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    navigationPath?: string;
+}
+
+@InputType()
+export class HomeBlockUpdateInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    title?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    imagePath?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    navigationPath?: string;
+    @Field(() => RgbBackgroundUpdateOneRequiredWithoutHomeBlockNestedInput, {nullable:true})
+    rgbBackground?: InstanceType<typeof RgbBackgroundUpdateOneRequiredWithoutHomeBlockNestedInput>;
+}
+
+@InputType()
+export class HomeBlockUpsertWithoutRgbBackgroundInput {
+    @Field(() => HomeBlockUpdateWithoutRgbBackgroundInput, {nullable:false})
+    @Type(() => HomeBlockUpdateWithoutRgbBackgroundInput)
+    update!: InstanceType<typeof HomeBlockUpdateWithoutRgbBackgroundInput>;
+    @Field(() => HomeBlockCreateWithoutRgbBackgroundInput, {nullable:false})
+    @Type(() => HomeBlockCreateWithoutRgbBackgroundInput)
+    create!: InstanceType<typeof HomeBlockCreateWithoutRgbBackgroundInput>;
+    @Field(() => HomeBlockWhereInput, {nullable:true})
+    @Type(() => HomeBlockWhereInput)
+    where?: InstanceType<typeof HomeBlockWhereInput>;
+}
+
+@InputType()
+export class HomeBlockWhereUniqueInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    rgbBackgroundId?: string;
+    @Field(() => [HomeBlockWhereInput], {nullable:true})
+    AND?: Array<HomeBlockWhereInput>;
+    @Field(() => [HomeBlockWhereInput], {nullable:true})
+    OR?: Array<HomeBlockWhereInput>;
+    @Field(() => [HomeBlockWhereInput], {nullable:true})
+    NOT?: Array<HomeBlockWhereInput>;
+    @Field(() => StringFilter, {nullable:true})
+    title?: InstanceType<typeof StringFilter>;
+    @Field(() => StringFilter, {nullable:true})
+    imagePath?: InstanceType<typeof StringFilter>;
+    @Field(() => StringFilter, {nullable:true})
+    navigationPath?: InstanceType<typeof StringFilter>;
+    @Field(() => RgbBackgroundRelationFilter, {nullable:true})
+    rgbBackground?: InstanceType<typeof RgbBackgroundRelationFilter>;
+}
+
+@InputType()
+export class HomeBlockWhereInput {
+    @Field(() => [HomeBlockWhereInput], {nullable:true})
+    AND?: Array<HomeBlockWhereInput>;
+    @Field(() => [HomeBlockWhereInput], {nullable:true})
+    OR?: Array<HomeBlockWhereInput>;
+    @Field(() => [HomeBlockWhereInput], {nullable:true})
+    NOT?: Array<HomeBlockWhereInput>;
+    @Field(() => StringFilter, {nullable:true})
+    id?: InstanceType<typeof StringFilter>;
+    @Field(() => StringFilter, {nullable:true})
+    title?: InstanceType<typeof StringFilter>;
+    @Field(() => StringFilter, {nullable:true})
+    imagePath?: InstanceType<typeof StringFilter>;
+    @Field(() => StringFilter, {nullable:true})
+    navigationPath?: InstanceType<typeof StringFilter>;
+    @Field(() => StringFilter, {nullable:true})
+    rgbBackgroundId?: InstanceType<typeof StringFilter>;
+    @Field(() => RgbBackgroundRelationFilter, {nullable:true})
+    rgbBackground?: InstanceType<typeof RgbBackgroundRelationFilter>;
+}
+
+@ObjectType()
+export class HomeBlock {
+    @Field(() => ID, {nullable:false})
+    id!: string;
+    @Field(() => String, {nullable:false})
+    title!: string;
+    @Field(() => String, {nullable:false})
+    imagePath!: string;
+    @Field(() => String, {nullable:false})
+    navigationPath!: string;
+    @Field(() => String, {nullable:false})
+    rgbBackgroundId!: string;
+    @Field(() => RgbBackground, {nullable:false})
+    rgbBackground?: InstanceType<typeof RgbBackground>;
+}
+
+@ArgsType()
+export class UpdateManyHomeBlockArgs {
+    @Field(() => HomeBlockUpdateManyMutationInput, {nullable:false})
+    @Type(() => HomeBlockUpdateManyMutationInput)
+    @ValidateNested()
+    data!: InstanceType<typeof HomeBlockUpdateManyMutationInput>;
+    @Field(() => HomeBlockWhereInput, {nullable:true})
+    @Type(() => HomeBlockWhereInput)
+    @ValidateNested()
+    where?: InstanceType<typeof HomeBlockWhereInput>;
+}
+
+@ArgsType()
+export class UpdateOneHomeBlockArgs {
+    @Field(() => HomeBlockUpdateInput, {nullable:false})
+    @Type(() => HomeBlockUpdateInput)
+    @ValidateNested()
+    data!: InstanceType<typeof HomeBlockUpdateInput>;
+    @Field(() => HomeBlockWhereUniqueInput, {nullable:false})
+    @Type(() => HomeBlockWhereUniqueInput)
+    @ValidateNested()
+    where!: Prisma.AtLeast<HomeBlockWhereUniqueInput, 'id' | 'rgbBackgroundId'>;
+}
+
+@ArgsType()
+export class UpsertOneHomeBlockArgs {
+    @Field(() => HomeBlockWhereUniqueInput, {nullable:false})
+    @Type(() => HomeBlockWhereUniqueInput)
+    @ValidateNested()
+    where!: Prisma.AtLeast<HomeBlockWhereUniqueInput, 'id' | 'rgbBackgroundId'>;
+    @Field(() => HomeBlockCreateInput, {nullable:false})
+    @Type(() => HomeBlockCreateInput)
+    create!: InstanceType<typeof HomeBlockCreateInput>;
+    @Field(() => HomeBlockUpdateInput, {nullable:false})
+    @Type(() => HomeBlockUpdateInput)
+    update!: InstanceType<typeof HomeBlockUpdateInput>;
+}
 
 @ObjectType()
 export class AffectedRows {
@@ -52,7 +923,57 @@ export class AffectedRows {
 }
 
 @InputType()
-export class NestedIntFilter {
+export class FloatFilter {
+    @Field(() => Float, {nullable:true})
+    equals?: number;
+    @Field(() => [Float], {nullable:true})
+    in?: Array<number>;
+    @Field(() => [Float], {nullable:true})
+    notIn?: Array<number>;
+    @Field(() => Float, {nullable:true})
+    lt?: number;
+    @Field(() => Float, {nullable:true})
+    lte?: number;
+    @Field(() => Float, {nullable:true})
+    gt?: number;
+    @Field(() => Float, {nullable:true})
+    gte?: number;
+    @Field(() => FloatFilter, {nullable:true})
+    not?: InstanceType<typeof FloatFilter>;
+}
+
+@InputType()
+export class FloatWithAggregatesFilter {
+    @Field(() => Float, {nullable:true})
+    equals?: number;
+    @Field(() => [Float], {nullable:true})
+    in?: Array<number>;
+    @Field(() => [Float], {nullable:true})
+    notIn?: Array<number>;
+    @Field(() => Float, {nullable:true})
+    lt?: number;
+    @Field(() => Float, {nullable:true})
+    lte?: number;
+    @Field(() => Float, {nullable:true})
+    gt?: number;
+    @Field(() => Float, {nullable:true})
+    gte?: number;
+    @Field(() => FloatWithAggregatesFilter, {nullable:true})
+    not?: InstanceType<typeof FloatWithAggregatesFilter>;
+    @Field(() => IntFilter, {nullable:true})
+    _count?: InstanceType<typeof IntFilter>;
+    @Field(() => FloatFilter, {nullable:true})
+    _avg?: InstanceType<typeof FloatFilter>;
+    @Field(() => FloatFilter, {nullable:true})
+    _sum?: InstanceType<typeof FloatFilter>;
+    @Field(() => FloatFilter, {nullable:true})
+    _min?: InstanceType<typeof FloatFilter>;
+    @Field(() => FloatFilter, {nullable:true})
+    _max?: InstanceType<typeof FloatFilter>;
+}
+
+@InputType()
+export class IntFilter {
     @Field(() => Int, {nullable:true})
     equals?: number;
     @Field(() => [Int], {nullable:true})
@@ -67,12 +988,12 @@ export class NestedIntFilter {
     gt?: number;
     @Field(() => Int, {nullable:true})
     gte?: number;
-    @Field(() => NestedIntFilter, {nullable:true})
-    not?: InstanceType<typeof NestedIntFilter>;
+    @Field(() => IntFilter, {nullable:true})
+    not?: InstanceType<typeof IntFilter>;
 }
 
 @InputType()
-export class NestedIntNullableFilter {
+export class IntWithAggregatesFilter {
     @Field(() => Int, {nullable:true})
     equals?: number;
     @Field(() => [Int], {nullable:true})
@@ -87,130 +1008,18 @@ export class NestedIntNullableFilter {
     gt?: number;
     @Field(() => Int, {nullable:true})
     gte?: number;
-    @Field(() => NestedIntNullableFilter, {nullable:true})
-    not?: InstanceType<typeof NestedIntNullableFilter>;
-}
-
-@InputType()
-export class NestedStringFilter {
-    @Field(() => String, {nullable:true})
-    equals?: string;
-    @Field(() => [String], {nullable:true})
-    in?: Array<string>;
-    @Field(() => [String], {nullable:true})
-    notIn?: Array<string>;
-    @Field(() => String, {nullable:true})
-    lt?: string;
-    @Field(() => String, {nullable:true})
-    lte?: string;
-    @Field(() => String, {nullable:true})
-    gt?: string;
-    @Field(() => String, {nullable:true})
-    gte?: string;
-    @Field(() => String, {nullable:true})
-    contains?: string;
-    @Field(() => String, {nullable:true})
-    startsWith?: string;
-    @Field(() => String, {nullable:true})
-    endsWith?: string;
-    @Field(() => NestedStringFilter, {nullable:true})
-    not?: InstanceType<typeof NestedStringFilter>;
-}
-
-@InputType()
-export class NestedStringNullableFilter {
-    @Field(() => String, {nullable:true})
-    equals?: string;
-    @Field(() => [String], {nullable:true})
-    in?: Array<string>;
-    @Field(() => [String], {nullable:true})
-    notIn?: Array<string>;
-    @Field(() => String, {nullable:true})
-    lt?: string;
-    @Field(() => String, {nullable:true})
-    lte?: string;
-    @Field(() => String, {nullable:true})
-    gt?: string;
-    @Field(() => String, {nullable:true})
-    gte?: string;
-    @Field(() => String, {nullable:true})
-    contains?: string;
-    @Field(() => String, {nullable:true})
-    startsWith?: string;
-    @Field(() => String, {nullable:true})
-    endsWith?: string;
-    @Field(() => NestedStringNullableFilter, {nullable:true})
-    not?: InstanceType<typeof NestedStringNullableFilter>;
-}
-
-@InputType()
-export class NestedStringNullableWithAggregatesFilter {
-    @Field(() => String, {nullable:true})
-    equals?: string;
-    @Field(() => [String], {nullable:true})
-    in?: Array<string>;
-    @Field(() => [String], {nullable:true})
-    notIn?: Array<string>;
-    @Field(() => String, {nullable:true})
-    lt?: string;
-    @Field(() => String, {nullable:true})
-    lte?: string;
-    @Field(() => String, {nullable:true})
-    gt?: string;
-    @Field(() => String, {nullable:true})
-    gte?: string;
-    @Field(() => String, {nullable:true})
-    contains?: string;
-    @Field(() => String, {nullable:true})
-    startsWith?: string;
-    @Field(() => String, {nullable:true})
-    endsWith?: string;
-    @Field(() => NestedStringNullableWithAggregatesFilter, {nullable:true})
-    not?: InstanceType<typeof NestedStringNullableWithAggregatesFilter>;
-    @Field(() => NestedIntNullableFilter, {nullable:true})
-    _count?: InstanceType<typeof NestedIntNullableFilter>;
-    @Field(() => NestedStringNullableFilter, {nullable:true})
-    _min?: InstanceType<typeof NestedStringNullableFilter>;
-    @Field(() => NestedStringNullableFilter, {nullable:true})
-    _max?: InstanceType<typeof NestedStringNullableFilter>;
-}
-
-@InputType()
-export class NestedStringWithAggregatesFilter {
-    @Field(() => String, {nullable:true})
-    equals?: string;
-    @Field(() => [String], {nullable:true})
-    in?: Array<string>;
-    @Field(() => [String], {nullable:true})
-    notIn?: Array<string>;
-    @Field(() => String, {nullable:true})
-    lt?: string;
-    @Field(() => String, {nullable:true})
-    lte?: string;
-    @Field(() => String, {nullable:true})
-    gt?: string;
-    @Field(() => String, {nullable:true})
-    gte?: string;
-    @Field(() => String, {nullable:true})
-    contains?: string;
-    @Field(() => String, {nullable:true})
-    startsWith?: string;
-    @Field(() => String, {nullable:true})
-    endsWith?: string;
-    @Field(() => NestedStringWithAggregatesFilter, {nullable:true})
-    not?: InstanceType<typeof NestedStringWithAggregatesFilter>;
-    @Field(() => NestedIntFilter, {nullable:true})
-    _count?: InstanceType<typeof NestedIntFilter>;
-    @Field(() => NestedStringFilter, {nullable:true})
-    _min?: InstanceType<typeof NestedStringFilter>;
-    @Field(() => NestedStringFilter, {nullable:true})
-    _max?: InstanceType<typeof NestedStringFilter>;
-}
-
-@InputType()
-export class NullableStringFieldUpdateOperationsInput {
-    @Field(() => String, {nullable:true})
-    set?: string;
+    @Field(() => IntWithAggregatesFilter, {nullable:true})
+    not?: InstanceType<typeof IntWithAggregatesFilter>;
+    @Field(() => IntFilter, {nullable:true})
+    _count?: InstanceType<typeof IntFilter>;
+    @Field(() => FloatFilter, {nullable:true})
+    _avg?: InstanceType<typeof FloatFilter>;
+    @Field(() => IntFilter, {nullable:true})
+    _sum?: InstanceType<typeof IntFilter>;
+    @Field(() => IntFilter, {nullable:true})
+    _min?: InstanceType<typeof IntFilter>;
+    @Field(() => IntFilter, {nullable:true})
+    _max?: InstanceType<typeof IntFilter>;
 }
 
 @InputType()
@@ -219,12 +1028,6 @@ export class SortOrderInput {
     sort!: keyof typeof SortOrder;
     @Field(() => NullsOrder, {nullable:true})
     nulls?: keyof typeof NullsOrder;
-}
-
-@InputType()
-export class StringFieldUpdateOperationsInput {
-    @Field(() => String, {nullable:true})
-    set?: string;
 }
 
 @InputType()
@@ -251,70 +1054,8 @@ export class StringFilter {
     endsWith?: string;
     @Field(() => QueryMode, {nullable:true})
     mode?: keyof typeof QueryMode;
-    @Field(() => NestedStringFilter, {nullable:true})
-    not?: InstanceType<typeof NestedStringFilter>;
-}
-
-@InputType()
-export class StringNullableFilter {
-    @Field(() => String, {nullable:true})
-    equals?: string;
-    @Field(() => [String], {nullable:true})
-    in?: Array<string>;
-    @Field(() => [String], {nullable:true})
-    notIn?: Array<string>;
-    @Field(() => String, {nullable:true})
-    lt?: string;
-    @Field(() => String, {nullable:true})
-    lte?: string;
-    @Field(() => String, {nullable:true})
-    gt?: string;
-    @Field(() => String, {nullable:true})
-    gte?: string;
-    @Field(() => String, {nullable:true})
-    contains?: string;
-    @Field(() => String, {nullable:true})
-    startsWith?: string;
-    @Field(() => String, {nullable:true})
-    endsWith?: string;
-    @Field(() => QueryMode, {nullable:true})
-    mode?: keyof typeof QueryMode;
-    @Field(() => NestedStringNullableFilter, {nullable:true})
-    not?: InstanceType<typeof NestedStringNullableFilter>;
-}
-
-@InputType()
-export class StringNullableWithAggregatesFilter {
-    @Field(() => String, {nullable:true})
-    equals?: string;
-    @Field(() => [String], {nullable:true})
-    in?: Array<string>;
-    @Field(() => [String], {nullable:true})
-    notIn?: Array<string>;
-    @Field(() => String, {nullable:true})
-    lt?: string;
-    @Field(() => String, {nullable:true})
-    lte?: string;
-    @Field(() => String, {nullable:true})
-    gt?: string;
-    @Field(() => String, {nullable:true})
-    gte?: string;
-    @Field(() => String, {nullable:true})
-    contains?: string;
-    @Field(() => String, {nullable:true})
-    startsWith?: string;
-    @Field(() => String, {nullable:true})
-    endsWith?: string;
-    @Field(() => QueryMode, {nullable:true})
-    mode?: keyof typeof QueryMode;
-    @Field(() => NestedStringNullableWithAggregatesFilter, {nullable:true})
-    not?: InstanceType<typeof NestedStringNullableWithAggregatesFilter>;
-    @Field(() => NestedIntNullableFilter, {nullable:true})
-    _count?: InstanceType<typeof NestedIntNullableFilter>;
-    @Field(() => NestedStringNullableFilter, {nullable:true})
-    _min?: InstanceType<typeof NestedStringNullableFilter>;
-    @Field(() => NestedStringNullableFilter, {nullable:true})
-    _max?: InstanceType<typeof NestedStringNullableFilter>;
+    @Field(() => StringFilter, {nullable:true})
+    not?: InstanceType<typeof StringFilter>;
 }
 
 @InputType()
@@ -341,14 +1082,949 @@ export class StringWithAggregatesFilter {
     endsWith?: string;
     @Field(() => QueryMode, {nullable:true})
     mode?: keyof typeof QueryMode;
-    @Field(() => NestedStringWithAggregatesFilter, {nullable:true})
-    not?: InstanceType<typeof NestedStringWithAggregatesFilter>;
-    @Field(() => NestedIntFilter, {nullable:true})
-    _count?: InstanceType<typeof NestedIntFilter>;
-    @Field(() => NestedStringFilter, {nullable:true})
-    _min?: InstanceType<typeof NestedStringFilter>;
-    @Field(() => NestedStringFilter, {nullable:true})
-    _max?: InstanceType<typeof NestedStringFilter>;
+    @Field(() => StringWithAggregatesFilter, {nullable:true})
+    not?: InstanceType<typeof StringWithAggregatesFilter>;
+    @Field(() => IntFilter, {nullable:true})
+    _count?: InstanceType<typeof IntFilter>;
+    @Field(() => StringFilter, {nullable:true})
+    _min?: InstanceType<typeof StringFilter>;
+    @Field(() => StringFilter, {nullable:true})
+    _max?: InstanceType<typeof StringFilter>;
+}
+
+@ObjectType()
+export class AggregateRgbBackground {
+    @Field(() => RgbBackgroundCountAggregate, {nullable:true})
+    _count?: InstanceType<typeof RgbBackgroundCountAggregate>;
+    @Field(() => RgbBackgroundAvgAggregate, {nullable:true})
+    _avg?: InstanceType<typeof RgbBackgroundAvgAggregate>;
+    @Field(() => RgbBackgroundSumAggregate, {nullable:true})
+    _sum?: InstanceType<typeof RgbBackgroundSumAggregate>;
+    @Field(() => RgbBackgroundMinAggregate, {nullable:true})
+    _min?: InstanceType<typeof RgbBackgroundMinAggregate>;
+    @Field(() => RgbBackgroundMaxAggregate, {nullable:true})
+    _max?: InstanceType<typeof RgbBackgroundMaxAggregate>;
+}
+
+@ArgsType()
+export class CreateManyRgbBackgroundArgs {
+    @Field(() => [RgbBackgroundCreateManyInput], {nullable:false})
+    @Type(() => RgbBackgroundCreateManyInput)
+    @ValidateNested()
+    data!: Array<RgbBackgroundCreateManyInput>;
+    @Field(() => Boolean, {nullable:true})
+    skipDuplicates?: boolean;
+}
+
+@ArgsType()
+export class CreateOneRgbBackgroundArgs {
+    @Field(() => RgbBackgroundCreateInput, {nullable:false})
+    @Type(() => RgbBackgroundCreateInput)
+    @ValidateNested()
+    data!: InstanceType<typeof RgbBackgroundCreateInput>;
+}
+
+@ArgsType()
+export class DeleteManyRgbBackgroundArgs {
+    @Field(() => RgbBackgroundWhereInput, {nullable:true})
+    @Type(() => RgbBackgroundWhereInput)
+    @ValidateNested()
+    where?: InstanceType<typeof RgbBackgroundWhereInput>;
+}
+
+@ArgsType()
+export class DeleteOneRgbBackgroundArgs {
+    @Field(() => RgbBackgroundWhereUniqueInput, {nullable:false})
+    @Type(() => RgbBackgroundWhereUniqueInput)
+    @ValidateNested()
+    where!: Prisma.AtLeast<RgbBackgroundWhereUniqueInput, 'id'>;
+}
+
+@ArgsType()
+export class FindFirstRgbBackgroundOrThrowArgs {
+    @Field(() => RgbBackgroundWhereInput, {nullable:true})
+    @Type(() => RgbBackgroundWhereInput)
+    @ValidateNested()
+    where?: InstanceType<typeof RgbBackgroundWhereInput>;
+    @Field(() => [RgbBackgroundOrderByWithRelationInput], {nullable:true})
+    orderBy?: Array<RgbBackgroundOrderByWithRelationInput>;
+    @Field(() => RgbBackgroundWhereUniqueInput, {nullable:true})
+    cursor?: Prisma.AtLeast<RgbBackgroundWhereUniqueInput, 'id'>;
+    @Field(() => Int, {nullable:true})
+    take?: number;
+    @Field(() => Int, {nullable:true})
+    skip?: number;
+    @Field(() => [RgbBackgroundScalarFieldEnum], {nullable:true})
+    distinct?: Array<keyof typeof RgbBackgroundScalarFieldEnum>;
+}
+
+@ArgsType()
+export class FindFirstRgbBackgroundArgs {
+    @Field(() => RgbBackgroundWhereInput, {nullable:true})
+    @Type(() => RgbBackgroundWhereInput)
+    @ValidateNested()
+    where?: InstanceType<typeof RgbBackgroundWhereInput>;
+    @Field(() => [RgbBackgroundOrderByWithRelationInput], {nullable:true})
+    orderBy?: Array<RgbBackgroundOrderByWithRelationInput>;
+    @Field(() => RgbBackgroundWhereUniqueInput, {nullable:true})
+    cursor?: Prisma.AtLeast<RgbBackgroundWhereUniqueInput, 'id'>;
+    @Field(() => Int, {nullable:true})
+    take?: number;
+    @Field(() => Int, {nullable:true})
+    skip?: number;
+    @Field(() => [RgbBackgroundScalarFieldEnum], {nullable:true})
+    distinct?: Array<keyof typeof RgbBackgroundScalarFieldEnum>;
+}
+
+@ArgsType()
+export class FindManyRgbBackgroundArgs {
+    @Field(() => RgbBackgroundWhereInput, {nullable:true})
+    @Type(() => RgbBackgroundWhereInput)
+    @ValidateNested()
+    where?: InstanceType<typeof RgbBackgroundWhereInput>;
+    @Field(() => [RgbBackgroundOrderByWithRelationInput], {nullable:true})
+    orderBy?: Array<RgbBackgroundOrderByWithRelationInput>;
+    @Field(() => RgbBackgroundWhereUniqueInput, {nullable:true})
+    cursor?: Prisma.AtLeast<RgbBackgroundWhereUniqueInput, 'id'>;
+    @Field(() => Int, {nullable:true})
+    take?: number;
+    @Field(() => Int, {nullable:true})
+    skip?: number;
+    @Field(() => [RgbBackgroundScalarFieldEnum], {nullable:true})
+    distinct?: Array<keyof typeof RgbBackgroundScalarFieldEnum>;
+}
+
+@ArgsType()
+export class FindUniqueRgbBackgroundOrThrowArgs {
+    @Field(() => RgbBackgroundWhereUniqueInput, {nullable:false})
+    @Type(() => RgbBackgroundWhereUniqueInput)
+    @ValidateNested()
+    where!: Prisma.AtLeast<RgbBackgroundWhereUniqueInput, 'id'>;
+}
+
+@ArgsType()
+export class FindUniqueRgbBackgroundArgs {
+    @Field(() => RgbBackgroundWhereUniqueInput, {nullable:false})
+    @Type(() => RgbBackgroundWhereUniqueInput)
+    @ValidateNested()
+    where!: Prisma.AtLeast<RgbBackgroundWhereUniqueInput, 'id'>;
+}
+
+@ArgsType()
+export class RgbBackgroundAggregateArgs {
+    @Field(() => RgbBackgroundWhereInput, {nullable:true})
+    @Type(() => RgbBackgroundWhereInput)
+    @ValidateNested()
+    where?: InstanceType<typeof RgbBackgroundWhereInput>;
+    @Field(() => [RgbBackgroundOrderByWithRelationInput], {nullable:true})
+    orderBy?: Array<RgbBackgroundOrderByWithRelationInput>;
+    @Field(() => RgbBackgroundWhereUniqueInput, {nullable:true})
+    cursor?: Prisma.AtLeast<RgbBackgroundWhereUniqueInput, 'id'>;
+    @Field(() => Int, {nullable:true})
+    take?: number;
+    @Field(() => Int, {nullable:true})
+    skip?: number;
+    @Field(() => RgbBackgroundCountAggregateInput, {nullable:true})
+    _count?: InstanceType<typeof RgbBackgroundCountAggregateInput>;
+    @Field(() => RgbBackgroundAvgAggregateInput, {nullable:true})
+    _avg?: InstanceType<typeof RgbBackgroundAvgAggregateInput>;
+    @Field(() => RgbBackgroundSumAggregateInput, {nullable:true})
+    _sum?: InstanceType<typeof RgbBackgroundSumAggregateInput>;
+    @Field(() => RgbBackgroundMinAggregateInput, {nullable:true})
+    _min?: InstanceType<typeof RgbBackgroundMinAggregateInput>;
+    @Field(() => RgbBackgroundMaxAggregateInput, {nullable:true})
+    _max?: InstanceType<typeof RgbBackgroundMaxAggregateInput>;
+}
+
+@InputType()
+export class RgbBackgroundAvgAggregateInput {
+    @Field(() => Boolean, {nullable:true})
+    r?: true;
+    @Field(() => Boolean, {nullable:true})
+    g?: true;
+    @Field(() => Boolean, {nullable:true})
+    b?: true;
+    @Field(() => Boolean, {nullable:true})
+    a?: true;
+}
+
+@ObjectType()
+export class RgbBackgroundAvgAggregate {
+    @Field(() => Float, {nullable:true})
+    r?: number;
+    @Field(() => Float, {nullable:true})
+    g?: number;
+    @Field(() => Float, {nullable:true})
+    b?: number;
+    @Field(() => Float, {nullable:true})
+    a?: number;
+}
+
+@InputType()
+export class RgbBackgroundAvgOrderByAggregateInput {
+    @Field(() => SortOrder, {nullable:true})
+    r?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    g?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    b?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    a?: keyof typeof SortOrder;
+}
+
+@InputType()
+export class RgbBackgroundCountAggregateInput {
+    @Field(() => Boolean, {nullable:true})
+    id?: true;
+    @Field(() => Boolean, {nullable:true})
+    r?: true;
+    @Field(() => Boolean, {nullable:true})
+    g?: true;
+    @Field(() => Boolean, {nullable:true})
+    b?: true;
+    @Field(() => Boolean, {nullable:true})
+    a?: true;
+    @Field(() => Boolean, {nullable:true})
+    _all?: true;
+}
+
+@ObjectType()
+export class RgbBackgroundCountAggregate {
+    @Field(() => Int, {nullable:false})
+    id!: number;
+    @Field(() => Int, {nullable:false})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    r!: number;
+    @Field(() => Int, {nullable:false})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    g!: number;
+    @Field(() => Int, {nullable:false})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    b!: number;
+    @Field(() => Int, {nullable:false})
+    a!: number;
+    @Field(() => Int, {nullable:false})
+    _all!: number;
+}
+
+@InputType()
+export class RgbBackgroundCountOrderByAggregateInput {
+    @Field(() => SortOrder, {nullable:true})
+    id?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    r?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    g?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    b?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    a?: keyof typeof SortOrder;
+}
+
+@InputType()
+export class RgbBackgroundCreateManyInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => Int, {nullable:false})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    r!: number;
+    @Field(() => Int, {nullable:false})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    g!: number;
+    @Field(() => Int, {nullable:false})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    b!: number;
+    @Field(() => Float, {nullable:true})
+    a?: number;
+}
+
+@InputType()
+export class RgbBackgroundCreateNestedOneWithoutHomeBlockInput {
+    @Field(() => RgbBackgroundCreateWithoutHomeBlockInput, {nullable:true})
+    @Type(() => RgbBackgroundCreateWithoutHomeBlockInput)
+    create?: InstanceType<typeof RgbBackgroundCreateWithoutHomeBlockInput>;
+    @Field(() => RgbBackgroundCreateOrConnectWithoutHomeBlockInput, {nullable:true})
+    @Type(() => RgbBackgroundCreateOrConnectWithoutHomeBlockInput)
+    connectOrCreate?: InstanceType<typeof RgbBackgroundCreateOrConnectWithoutHomeBlockInput>;
+    @Field(() => RgbBackgroundWhereUniqueInput, {nullable:true})
+    @Type(() => RgbBackgroundWhereUniqueInput)
+    connect?: Prisma.AtLeast<RgbBackgroundWhereUniqueInput, 'id'>;
+}
+
+@InputType()
+export class RgbBackgroundCreateOrConnectWithoutHomeBlockInput {
+    @Field(() => RgbBackgroundWhereUniqueInput, {nullable:false})
+    @Type(() => RgbBackgroundWhereUniqueInput)
+    where!: Prisma.AtLeast<RgbBackgroundWhereUniqueInput, 'id'>;
+    @Field(() => RgbBackgroundCreateWithoutHomeBlockInput, {nullable:false})
+    @Type(() => RgbBackgroundCreateWithoutHomeBlockInput)
+    create!: InstanceType<typeof RgbBackgroundCreateWithoutHomeBlockInput>;
+}
+
+@InputType()
+export class RgbBackgroundCreateWithoutHomeBlockInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => Int, {nullable:false})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    r!: number;
+    @Field(() => Int, {nullable:false})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    g!: number;
+    @Field(() => Int, {nullable:false})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    b!: number;
+    @Field(() => Float, {nullable:true})
+    a?: number;
+}
+
+@InputType()
+export class RgbBackgroundCreateInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => Int, {nullable:false})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    r!: number;
+    @Field(() => Int, {nullable:false})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    g!: number;
+    @Field(() => Int, {nullable:false})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    b!: number;
+    @Field(() => Float, {nullable:true})
+    a?: number;
+    @Field(() => HomeBlockCreateNestedOneWithoutRgbBackgroundInput, {nullable:true})
+    homeBlock?: InstanceType<typeof HomeBlockCreateNestedOneWithoutRgbBackgroundInput>;
+}
+
+@ArgsType()
+export class RgbBackgroundGroupByArgs {
+    @Field(() => RgbBackgroundWhereInput, {nullable:true})
+    @Type(() => RgbBackgroundWhereInput)
+    @ValidateNested()
+    where?: InstanceType<typeof RgbBackgroundWhereInput>;
+    @Field(() => [RgbBackgroundOrderByWithAggregationInput], {nullable:true})
+    orderBy?: Array<RgbBackgroundOrderByWithAggregationInput>;
+    @Field(() => [RgbBackgroundScalarFieldEnum], {nullable:false})
+    by!: Array<keyof typeof RgbBackgroundScalarFieldEnum>;
+    @Field(() => RgbBackgroundScalarWhereWithAggregatesInput, {nullable:true})
+    having?: InstanceType<typeof RgbBackgroundScalarWhereWithAggregatesInput>;
+    @Field(() => Int, {nullable:true})
+    take?: number;
+    @Field(() => Int, {nullable:true})
+    skip?: number;
+    @Field(() => RgbBackgroundCountAggregateInput, {nullable:true})
+    _count?: InstanceType<typeof RgbBackgroundCountAggregateInput>;
+    @Field(() => RgbBackgroundAvgAggregateInput, {nullable:true})
+    _avg?: InstanceType<typeof RgbBackgroundAvgAggregateInput>;
+    @Field(() => RgbBackgroundSumAggregateInput, {nullable:true})
+    _sum?: InstanceType<typeof RgbBackgroundSumAggregateInput>;
+    @Field(() => RgbBackgroundMinAggregateInput, {nullable:true})
+    _min?: InstanceType<typeof RgbBackgroundMinAggregateInput>;
+    @Field(() => RgbBackgroundMaxAggregateInput, {nullable:true})
+    _max?: InstanceType<typeof RgbBackgroundMaxAggregateInput>;
+}
+
+@ObjectType()
+export class RgbBackgroundGroupBy {
+    @Field(() => String, {nullable:false})
+    id!: string;
+    @Field(() => Int, {nullable:false})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    r!: number;
+    @Field(() => Int, {nullable:false})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    g!: number;
+    @Field(() => Int, {nullable:false})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    b!: number;
+    @Field(() => Float, {nullable:true})
+    a?: number;
+    @Field(() => RgbBackgroundCountAggregate, {nullable:true})
+    _count?: InstanceType<typeof RgbBackgroundCountAggregate>;
+    @Field(() => RgbBackgroundAvgAggregate, {nullable:true})
+    _avg?: InstanceType<typeof RgbBackgroundAvgAggregate>;
+    @Field(() => RgbBackgroundSumAggregate, {nullable:true})
+    _sum?: InstanceType<typeof RgbBackgroundSumAggregate>;
+    @Field(() => RgbBackgroundMinAggregate, {nullable:true})
+    _min?: InstanceType<typeof RgbBackgroundMinAggregate>;
+    @Field(() => RgbBackgroundMaxAggregate, {nullable:true})
+    _max?: InstanceType<typeof RgbBackgroundMaxAggregate>;
+}
+
+@InputType()
+export class RgbBackgroundMaxAggregateInput {
+    @Field(() => Boolean, {nullable:true})
+    id?: true;
+    @Field(() => Boolean, {nullable:true})
+    r?: true;
+    @Field(() => Boolean, {nullable:true})
+    g?: true;
+    @Field(() => Boolean, {nullable:true})
+    b?: true;
+    @Field(() => Boolean, {nullable:true})
+    a?: true;
+}
+
+@ObjectType()
+export class RgbBackgroundMaxAggregate {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    r?: number;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    g?: number;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    b?: number;
+    @Field(() => Float, {nullable:true})
+    a?: number;
+}
+
+@InputType()
+export class RgbBackgroundMaxOrderByAggregateInput {
+    @Field(() => SortOrder, {nullable:true})
+    id?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    r?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    g?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    b?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    a?: keyof typeof SortOrder;
+}
+
+@InputType()
+export class RgbBackgroundMinAggregateInput {
+    @Field(() => Boolean, {nullable:true})
+    id?: true;
+    @Field(() => Boolean, {nullable:true})
+    r?: true;
+    @Field(() => Boolean, {nullable:true})
+    g?: true;
+    @Field(() => Boolean, {nullable:true})
+    b?: true;
+    @Field(() => Boolean, {nullable:true})
+    a?: true;
+}
+
+@ObjectType()
+export class RgbBackgroundMinAggregate {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    r?: number;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    g?: number;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    b?: number;
+    @Field(() => Float, {nullable:true})
+    a?: number;
+}
+
+@InputType()
+export class RgbBackgroundMinOrderByAggregateInput {
+    @Field(() => SortOrder, {nullable:true})
+    id?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    r?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    g?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    b?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    a?: keyof typeof SortOrder;
+}
+
+@InputType()
+export class RgbBackgroundOrderByWithAggregationInput {
+    @Field(() => SortOrder, {nullable:true})
+    id?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    r?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    g?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    b?: keyof typeof SortOrder;
+    @Field(() => SortOrderInput, {nullable:true})
+    a?: InstanceType<typeof SortOrderInput>;
+    @Field(() => RgbBackgroundCountOrderByAggregateInput, {nullable:true})
+    _count?: InstanceType<typeof RgbBackgroundCountOrderByAggregateInput>;
+    @Field(() => RgbBackgroundAvgOrderByAggregateInput, {nullable:true})
+    _avg?: InstanceType<typeof RgbBackgroundAvgOrderByAggregateInput>;
+    @Field(() => RgbBackgroundMaxOrderByAggregateInput, {nullable:true})
+    _max?: InstanceType<typeof RgbBackgroundMaxOrderByAggregateInput>;
+    @Field(() => RgbBackgroundMinOrderByAggregateInput, {nullable:true})
+    _min?: InstanceType<typeof RgbBackgroundMinOrderByAggregateInput>;
+    @Field(() => RgbBackgroundSumOrderByAggregateInput, {nullable:true})
+    _sum?: InstanceType<typeof RgbBackgroundSumOrderByAggregateInput>;
+}
+
+@InputType()
+export class RgbBackgroundOrderByWithRelationInput {
+    @Field(() => SortOrder, {nullable:true})
+    id?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    r?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    g?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    b?: keyof typeof SortOrder;
+    @Field(() => SortOrderInput, {nullable:true})
+    a?: InstanceType<typeof SortOrderInput>;
+    @Field(() => HomeBlockOrderByWithRelationInput, {nullable:true})
+    homeBlock?: InstanceType<typeof HomeBlockOrderByWithRelationInput>;
+}
+
+@InputType()
+export class RgbBackgroundRelationFilter {
+    @Field(() => RgbBackgroundWhereInput, {nullable:true})
+    is?: InstanceType<typeof RgbBackgroundWhereInput>;
+    @Field(() => RgbBackgroundWhereInput, {nullable:true})
+    isNot?: InstanceType<typeof RgbBackgroundWhereInput>;
+}
+
+@InputType()
+export class RgbBackgroundScalarWhereWithAggregatesInput {
+    @Field(() => [RgbBackgroundScalarWhereWithAggregatesInput], {nullable:true})
+    AND?: Array<RgbBackgroundScalarWhereWithAggregatesInput>;
+    @Field(() => [RgbBackgroundScalarWhereWithAggregatesInput], {nullable:true})
+    OR?: Array<RgbBackgroundScalarWhereWithAggregatesInput>;
+    @Field(() => [RgbBackgroundScalarWhereWithAggregatesInput], {nullable:true})
+    NOT?: Array<RgbBackgroundScalarWhereWithAggregatesInput>;
+    @Field(() => StringWithAggregatesFilter, {nullable:true})
+    id?: InstanceType<typeof StringWithAggregatesFilter>;
+    @Field(() => IntWithAggregatesFilter, {nullable:true})
+    r?: InstanceType<typeof IntWithAggregatesFilter>;
+    @Field(() => IntWithAggregatesFilter, {nullable:true})
+    g?: InstanceType<typeof IntWithAggregatesFilter>;
+    @Field(() => IntWithAggregatesFilter, {nullable:true})
+    b?: InstanceType<typeof IntWithAggregatesFilter>;
+    @Field(() => FloatWithAggregatesFilter, {nullable:true})
+    a?: InstanceType<typeof FloatWithAggregatesFilter>;
+}
+
+@InputType()
+export class RgbBackgroundSumAggregateInput {
+    @Field(() => Boolean, {nullable:true})
+    r?: true;
+    @Field(() => Boolean, {nullable:true})
+    g?: true;
+    @Field(() => Boolean, {nullable:true})
+    b?: true;
+    @Field(() => Boolean, {nullable:true})
+    a?: true;
+}
+
+@ObjectType()
+export class RgbBackgroundSumAggregate {
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    r?: number;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    g?: number;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    b?: number;
+    @Field(() => Float, {nullable:true})
+    a?: number;
+}
+
+@InputType()
+export class RgbBackgroundSumOrderByAggregateInput {
+    @Field(() => SortOrder, {nullable:true})
+    r?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    g?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    b?: keyof typeof SortOrder;
+    @Field(() => SortOrder, {nullable:true})
+    a?: keyof typeof SortOrder;
+}
+
+@InputType()
+export class RgbBackgroundUncheckedCreateWithoutHomeBlockInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => Int, {nullable:false})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    r!: number;
+    @Field(() => Int, {nullable:false})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    g!: number;
+    @Field(() => Int, {nullable:false})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    b!: number;
+    @Field(() => Float, {nullable:true})
+    a?: number;
+}
+
+@InputType()
+export class RgbBackgroundUncheckedCreateInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => Int, {nullable:false})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    r!: number;
+    @Field(() => Int, {nullable:false})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    g!: number;
+    @Field(() => Int, {nullable:false})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    b!: number;
+    @Field(() => Float, {nullable:true})
+    a?: number;
+    @Field(() => HomeBlockUncheckedCreateNestedOneWithoutRgbBackgroundInput, {nullable:true})
+    homeBlock?: InstanceType<typeof HomeBlockUncheckedCreateNestedOneWithoutRgbBackgroundInput>;
+}
+
+@InputType()
+export class RgbBackgroundUncheckedUpdateManyInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    r?: number;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    g?: number;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    b?: number;
+    @Field(() => Float, {nullable:true})
+    a?: number;
+}
+
+@InputType()
+export class RgbBackgroundUncheckedUpdateWithoutHomeBlockInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    r?: number;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    g?: number;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    b?: number;
+    @Field(() => Float, {nullable:true})
+    a?: number;
+}
+
+@InputType()
+export class RgbBackgroundUncheckedUpdateInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    r?: number;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    g?: number;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    b?: number;
+    @Field(() => Float, {nullable:true})
+    a?: number;
+    @Field(() => HomeBlockUncheckedUpdateOneWithoutRgbBackgroundNestedInput, {nullable:true})
+    homeBlock?: InstanceType<typeof HomeBlockUncheckedUpdateOneWithoutRgbBackgroundNestedInput>;
+}
+
+@InputType()
+export class RgbBackgroundUpdateManyMutationInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    r?: number;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    g?: number;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    b?: number;
+    @Field(() => Float, {nullable:true})
+    a?: number;
+}
+
+@InputType()
+export class RgbBackgroundUpdateOneRequiredWithoutHomeBlockNestedInput {
+    @Field(() => RgbBackgroundCreateWithoutHomeBlockInput, {nullable:true})
+    @Type(() => RgbBackgroundCreateWithoutHomeBlockInput)
+    create?: InstanceType<typeof RgbBackgroundCreateWithoutHomeBlockInput>;
+    @Field(() => RgbBackgroundCreateOrConnectWithoutHomeBlockInput, {nullable:true})
+    @Type(() => RgbBackgroundCreateOrConnectWithoutHomeBlockInput)
+    connectOrCreate?: InstanceType<typeof RgbBackgroundCreateOrConnectWithoutHomeBlockInput>;
+    @Field(() => RgbBackgroundUpsertWithoutHomeBlockInput, {nullable:true})
+    @Type(() => RgbBackgroundUpsertWithoutHomeBlockInput)
+    upsert?: InstanceType<typeof RgbBackgroundUpsertWithoutHomeBlockInput>;
+    @Field(() => RgbBackgroundWhereUniqueInput, {nullable:true})
+    @Type(() => RgbBackgroundWhereUniqueInput)
+    connect?: Prisma.AtLeast<RgbBackgroundWhereUniqueInput, 'id'>;
+    @Field(() => RgbBackgroundUpdateToOneWithWhereWithoutHomeBlockInput, {nullable:true})
+    @Type(() => RgbBackgroundUpdateToOneWithWhereWithoutHomeBlockInput)
+    update?: InstanceType<typeof RgbBackgroundUpdateToOneWithWhereWithoutHomeBlockInput>;
+}
+
+@InputType()
+export class RgbBackgroundUpdateToOneWithWhereWithoutHomeBlockInput {
+    @Field(() => RgbBackgroundWhereInput, {nullable:true})
+    @Type(() => RgbBackgroundWhereInput)
+    where?: InstanceType<typeof RgbBackgroundWhereInput>;
+    @Field(() => RgbBackgroundUpdateWithoutHomeBlockInput, {nullable:false})
+    @Type(() => RgbBackgroundUpdateWithoutHomeBlockInput)
+    data!: InstanceType<typeof RgbBackgroundUpdateWithoutHomeBlockInput>;
+}
+
+@InputType()
+export class RgbBackgroundUpdateWithoutHomeBlockInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    r?: number;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    g?: number;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    b?: number;
+    @Field(() => Float, {nullable:true})
+    a?: number;
+}
+
+@InputType()
+export class RgbBackgroundUpdateInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    r?: number;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    g?: number;
+    @Field(() => Int, {nullable:true})
+    @Validator.IsInt()
+    @Validator.Min(0)
+    @Validator.Max(255)
+    b?: number;
+    @Field(() => Float, {nullable:true})
+    a?: number;
+    @Field(() => HomeBlockUpdateOneWithoutRgbBackgroundNestedInput, {nullable:true})
+    homeBlock?: InstanceType<typeof HomeBlockUpdateOneWithoutRgbBackgroundNestedInput>;
+}
+
+@InputType()
+export class RgbBackgroundUpsertWithoutHomeBlockInput {
+    @Field(() => RgbBackgroundUpdateWithoutHomeBlockInput, {nullable:false})
+    @Type(() => RgbBackgroundUpdateWithoutHomeBlockInput)
+    update!: InstanceType<typeof RgbBackgroundUpdateWithoutHomeBlockInput>;
+    @Field(() => RgbBackgroundCreateWithoutHomeBlockInput, {nullable:false})
+    @Type(() => RgbBackgroundCreateWithoutHomeBlockInput)
+    create!: InstanceType<typeof RgbBackgroundCreateWithoutHomeBlockInput>;
+    @Field(() => RgbBackgroundWhereInput, {nullable:true})
+    @Type(() => RgbBackgroundWhereInput)
+    where?: InstanceType<typeof RgbBackgroundWhereInput>;
+}
+
+@InputType()
+export class RgbBackgroundWhereUniqueInput {
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => [RgbBackgroundWhereInput], {nullable:true})
+    AND?: Array<RgbBackgroundWhereInput>;
+    @Field(() => [RgbBackgroundWhereInput], {nullable:true})
+    OR?: Array<RgbBackgroundWhereInput>;
+    @Field(() => [RgbBackgroundWhereInput], {nullable:true})
+    NOT?: Array<RgbBackgroundWhereInput>;
+    @Field(() => IntFilter, {nullable:true})
+    r?: InstanceType<typeof IntFilter>;
+    @Field(() => IntFilter, {nullable:true})
+    g?: InstanceType<typeof IntFilter>;
+    @Field(() => IntFilter, {nullable:true})
+    b?: InstanceType<typeof IntFilter>;
+    @Field(() => FloatFilter, {nullable:true})
+    a?: InstanceType<typeof FloatFilter>;
+    @Field(() => HomeBlockRelationFilter, {nullable:true})
+    homeBlock?: InstanceType<typeof HomeBlockRelationFilter>;
+}
+
+@InputType()
+export class RgbBackgroundWhereInput {
+    @Field(() => [RgbBackgroundWhereInput], {nullable:true})
+    AND?: Array<RgbBackgroundWhereInput>;
+    @Field(() => [RgbBackgroundWhereInput], {nullable:true})
+    OR?: Array<RgbBackgroundWhereInput>;
+    @Field(() => [RgbBackgroundWhereInput], {nullable:true})
+    NOT?: Array<RgbBackgroundWhereInput>;
+    @Field(() => StringFilter, {nullable:true})
+    id?: InstanceType<typeof StringFilter>;
+    @Field(() => IntFilter, {nullable:true})
+    r?: InstanceType<typeof IntFilter>;
+    @Field(() => IntFilter, {nullable:true})
+    g?: InstanceType<typeof IntFilter>;
+    @Field(() => IntFilter, {nullable:true})
+    b?: InstanceType<typeof IntFilter>;
+    @Field(() => FloatFilter, {nullable:true})
+    a?: InstanceType<typeof FloatFilter>;
+    @Field(() => HomeBlockRelationFilter, {nullable:true})
+    homeBlock?: InstanceType<typeof HomeBlockRelationFilter>;
+}
+
+@ObjectType()
+export class RgbBackground {
+    @Field(() => ID, {nullable:false})
+    id!: string;
+    @Field(() => Int, {nullable:false})
+    r!: number;
+    @Field(() => Int, {nullable:false})
+    g!: number;
+    @Field(() => Int, {nullable:false})
+    b!: number;
+    @Field(() => Float, {nullable:true})
+    a!: number | null;
+    @Field(() => HomeBlock, {nullable:true})
+    homeBlock?: InstanceType<typeof HomeBlock> | null;
+}
+
+@ArgsType()
+export class UpdateManyRgbBackgroundArgs {
+    @Field(() => RgbBackgroundUpdateManyMutationInput, {nullable:false})
+    @Type(() => RgbBackgroundUpdateManyMutationInput)
+    @ValidateNested()
+    data!: InstanceType<typeof RgbBackgroundUpdateManyMutationInput>;
+    @Field(() => RgbBackgroundWhereInput, {nullable:true})
+    @Type(() => RgbBackgroundWhereInput)
+    @ValidateNested()
+    where?: InstanceType<typeof RgbBackgroundWhereInput>;
+}
+
+@ArgsType()
+export class UpdateOneRgbBackgroundArgs {
+    @Field(() => RgbBackgroundUpdateInput, {nullable:false})
+    @Type(() => RgbBackgroundUpdateInput)
+    @ValidateNested()
+    data!: InstanceType<typeof RgbBackgroundUpdateInput>;
+    @Field(() => RgbBackgroundWhereUniqueInput, {nullable:false})
+    @Type(() => RgbBackgroundWhereUniqueInput)
+    @ValidateNested()
+    where!: Prisma.AtLeast<RgbBackgroundWhereUniqueInput, 'id'>;
+}
+
+@ArgsType()
+export class UpsertOneRgbBackgroundArgs {
+    @Field(() => RgbBackgroundWhereUniqueInput, {nullable:false})
+    @Type(() => RgbBackgroundWhereUniqueInput)
+    @ValidateNested()
+    where!: Prisma.AtLeast<RgbBackgroundWhereUniqueInput, 'id'>;
+    @Field(() => RgbBackgroundCreateInput, {nullable:false})
+    @Type(() => RgbBackgroundCreateInput)
+    create!: InstanceType<typeof RgbBackgroundCreateInput>;
+    @Field(() => RgbBackgroundUpdateInput, {nullable:false})
+    @Type(() => RgbBackgroundUpdateInput)
+    update!: InstanceType<typeof RgbBackgroundUpdateInput>;
 }
 
 @ObjectType()
@@ -365,6 +2041,7 @@ export class AggregateUser {
 export class CreateManyUserArgs {
     @Field(() => [UserCreateManyInput], {nullable:false})
     @Type(() => UserCreateManyInput)
+    @ValidateNested()
     data!: Array<UserCreateManyInput>;
     @Field(() => Boolean, {nullable:true})
     skipDuplicates?: boolean;
@@ -374,6 +2051,7 @@ export class CreateManyUserArgs {
 export class CreateOneUserArgs {
     @Field(() => UserCreateInput, {nullable:false})
     @Type(() => UserCreateInput)
+    @ValidateNested()
     data!: InstanceType<typeof UserCreateInput>;
 }
 
@@ -381,6 +2059,7 @@ export class CreateOneUserArgs {
 export class DeleteManyUserArgs {
     @Field(() => UserWhereInput, {nullable:true})
     @Type(() => UserWhereInput)
+    @ValidateNested()
     where?: InstanceType<typeof UserWhereInput>;
 }
 
@@ -388,6 +2067,7 @@ export class DeleteManyUserArgs {
 export class DeleteOneUserArgs {
     @Field(() => UserWhereUniqueInput, {nullable:false})
     @Type(() => UserWhereUniqueInput)
+    @ValidateNested()
     where!: Prisma.AtLeast<UserWhereUniqueInput, 'id' | 'email'>;
 }
 
@@ -395,6 +2075,7 @@ export class DeleteOneUserArgs {
 export class FindFirstUserOrThrowArgs {
     @Field(() => UserWhereInput, {nullable:true})
     @Type(() => UserWhereInput)
+    @ValidateNested()
     where?: InstanceType<typeof UserWhereInput>;
     @Field(() => [UserOrderByWithRelationInput], {nullable:true})
     orderBy?: Array<UserOrderByWithRelationInput>;
@@ -412,6 +2093,7 @@ export class FindFirstUserOrThrowArgs {
 export class FindFirstUserArgs {
     @Field(() => UserWhereInput, {nullable:true})
     @Type(() => UserWhereInput)
+    @ValidateNested()
     where?: InstanceType<typeof UserWhereInput>;
     @Field(() => [UserOrderByWithRelationInput], {nullable:true})
     orderBy?: Array<UserOrderByWithRelationInput>;
@@ -429,6 +2111,7 @@ export class FindFirstUserArgs {
 export class FindManyUserArgs {
     @Field(() => UserWhereInput, {nullable:true})
     @Type(() => UserWhereInput)
+    @ValidateNested()
     where?: InstanceType<typeof UserWhereInput>;
     @Field(() => [UserOrderByWithRelationInput], {nullable:true})
     orderBy?: Array<UserOrderByWithRelationInput>;
@@ -446,6 +2129,7 @@ export class FindManyUserArgs {
 export class FindUniqueUserOrThrowArgs {
     @Field(() => UserWhereUniqueInput, {nullable:false})
     @Type(() => UserWhereUniqueInput)
+    @ValidateNested()
     where!: Prisma.AtLeast<UserWhereUniqueInput, 'id' | 'email'>;
 }
 
@@ -453,6 +2137,7 @@ export class FindUniqueUserOrThrowArgs {
 export class FindUniqueUserArgs {
     @Field(() => UserWhereUniqueInput, {nullable:false})
     @Type(() => UserWhereUniqueInput)
+    @ValidateNested()
     where!: Prisma.AtLeast<UserWhereUniqueInput, 'id' | 'email'>;
 }
 
@@ -460,9 +2145,11 @@ export class FindUniqueUserArgs {
 export class UpdateManyUserArgs {
     @Field(() => UserUpdateManyMutationInput, {nullable:false})
     @Type(() => UserUpdateManyMutationInput)
+    @ValidateNested()
     data!: InstanceType<typeof UserUpdateManyMutationInput>;
     @Field(() => UserWhereInput, {nullable:true})
     @Type(() => UserWhereInput)
+    @ValidateNested()
     where?: InstanceType<typeof UserWhereInput>;
 }
 
@@ -470,9 +2157,11 @@ export class UpdateManyUserArgs {
 export class UpdateOneUserArgs {
     @Field(() => UserUpdateInput, {nullable:false})
     @Type(() => UserUpdateInput)
+    @ValidateNested()
     data!: InstanceType<typeof UserUpdateInput>;
     @Field(() => UserWhereUniqueInput, {nullable:false})
     @Type(() => UserWhereUniqueInput)
+    @ValidateNested()
     where!: Prisma.AtLeast<UserWhereUniqueInput, 'id' | 'email'>;
 }
 
@@ -480,6 +2169,7 @@ export class UpdateOneUserArgs {
 export class UpsertOneUserArgs {
     @Field(() => UserWhereUniqueInput, {nullable:false})
     @Type(() => UserWhereUniqueInput)
+    @ValidateNested()
     where!: Prisma.AtLeast<UserWhereUniqueInput, 'id' | 'email'>;
     @Field(() => UserCreateInput, {nullable:false})
     @Type(() => UserCreateInput)
@@ -493,6 +2183,7 @@ export class UpsertOneUserArgs {
 export class UserAggregateArgs {
     @Field(() => UserWhereInput, {nullable:true})
     @Type(() => UserWhereInput)
+    @ValidateNested()
     where?: InstanceType<typeof UserWhereInput>;
     @Field(() => [UserOrderByWithRelationInput], {nullable:true})
     orderBy?: Array<UserOrderByWithRelationInput>;
@@ -592,6 +2283,7 @@ export class UserCreateInput {
 export class UserGroupByArgs {
     @Field(() => UserWhereInput, {nullable:true})
     @Type(() => UserWhereInput)
+    @ValidateNested()
     where?: InstanceType<typeof UserWhereInput>;
     @Field(() => [UserOrderByWithAggregationInput], {nullable:true})
     orderBy?: Array<UserOrderByWithAggregationInput>;
@@ -755,8 +2447,8 @@ export class UserScalarWhereWithAggregatesInput {
     id?: InstanceType<typeof StringWithAggregatesFilter>;
     @Field(() => StringWithAggregatesFilter, {nullable:true})
     email?: InstanceType<typeof StringWithAggregatesFilter>;
-    @Field(() => StringNullableWithAggregatesFilter, {nullable:true})
-    name?: InstanceType<typeof StringNullableWithAggregatesFilter>;
+    @Field(() => StringWithAggregatesFilter, {nullable:true})
+    name?: InstanceType<typeof StringWithAggregatesFilter>;
     @Field(() => StringWithAggregatesFilter, {nullable:true})
     password?: InstanceType<typeof StringWithAggregatesFilter>;
 }
@@ -782,50 +2474,78 @@ export class UserUncheckedCreateInput {
 
 @InputType()
 export class UserUncheckedUpdateManyInput {
-    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
-    id?: InstanceType<typeof StringFieldUpdateOperationsInput>;
-    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
-    email?: InstanceType<typeof StringFieldUpdateOperationsInput>;
-    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
-    name?: InstanceType<typeof NullableStringFieldUpdateOperationsInput>;
-    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
-    password?: InstanceType<typeof StringFieldUpdateOperationsInput>;
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsEmail()
+    email?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    name?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(8)
+    password?: string;
 }
 
 @InputType()
 export class UserUncheckedUpdateInput {
-    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
-    id?: InstanceType<typeof StringFieldUpdateOperationsInput>;
-    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
-    email?: InstanceType<typeof StringFieldUpdateOperationsInput>;
-    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
-    name?: InstanceType<typeof NullableStringFieldUpdateOperationsInput>;
-    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
-    password?: InstanceType<typeof StringFieldUpdateOperationsInput>;
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsEmail()
+    email?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    name?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(8)
+    password?: string;
 }
 
 @InputType()
 export class UserUpdateManyMutationInput {
-    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
-    id?: InstanceType<typeof StringFieldUpdateOperationsInput>;
-    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
-    email?: InstanceType<typeof StringFieldUpdateOperationsInput>;
-    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
-    name?: InstanceType<typeof NullableStringFieldUpdateOperationsInput>;
-    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
-    password?: InstanceType<typeof StringFieldUpdateOperationsInput>;
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsEmail()
+    email?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    name?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(8)
+    password?: string;
 }
 
 @InputType()
 export class UserUpdateInput {
-    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
-    id?: InstanceType<typeof StringFieldUpdateOperationsInput>;
-    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
-    email?: InstanceType<typeof StringFieldUpdateOperationsInput>;
-    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
-    name?: InstanceType<typeof NullableStringFieldUpdateOperationsInput>;
-    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
-    password?: InstanceType<typeof StringFieldUpdateOperationsInput>;
+    @Field(() => String, {nullable:true})
+    id?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsEmail()
+    email?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(3)
+    name?: string;
+    @Field(() => String, {nullable:true})
+    @Validator.IsString()
+    @Validator.MaxLength(100)
+    @Validator.MinLength(8)
+    password?: string;
 }
 
 @InputType()
@@ -841,8 +2561,8 @@ export class UserWhereUniqueInput {
     OR?: Array<UserWhereInput>;
     @Field(() => [UserWhereInput], {nullable:true})
     NOT?: Array<UserWhereInput>;
-    @Field(() => StringNullableFilter, {nullable:true})
-    name?: InstanceType<typeof StringNullableFilter>;
+    @Field(() => StringFilter, {nullable:true})
+    name?: InstanceType<typeof StringFilter>;
     @Field(() => StringFilter, {nullable:true})
     password?: InstanceType<typeof StringFilter>;
 }
@@ -859,8 +2579,8 @@ export class UserWhereInput {
     id?: InstanceType<typeof StringFilter>;
     @Field(() => StringFilter, {nullable:true})
     email?: InstanceType<typeof StringFilter>;
-    @Field(() => StringNullableFilter, {nullable:true})
-    name?: InstanceType<typeof StringNullableFilter>;
+    @Field(() => StringFilter, {nullable:true})
+    name?: InstanceType<typeof StringFilter>;
     @Field(() => StringFilter, {nullable:true})
     password?: InstanceType<typeof StringFilter>;
 }
@@ -870,12 +2590,8 @@ export class User {
     @Field(() => ID, {nullable:false})
     id!: string;
     @Field(() => String, {nullable:false})
-    @Validator.IsEmail()
     email!: string;
     @Field(() => String, {nullable:true})
-    @Validator.IsString()
-    @Validator.MaxLength(100)
-    @Validator.MinLength(3)
     name!: string | null;
     @HideField()
     password!: string;

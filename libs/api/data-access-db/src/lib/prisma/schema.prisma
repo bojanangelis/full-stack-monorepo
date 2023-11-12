@@ -13,10 +13,21 @@ datasource db {
 generator nestgraphql {
   provider                = "node node_modules/prisma-nestjs-graphql"
   output                  = "../../../../generated-db-types/src/lib"
+  purgeOutput             = false
+  combineScalarFilters    = true
   emitSingle              = true
+  noAtomicOperations      = true
+  // field validator
   fields_Validator_input  = true
   fields_Validator_output = true
+  fields_Validator_model  = true
   fields_Validator_from   = "class-validator"
+  // Args where|data nested validator
+  decorate_1_type         = "*Args"
+  decorate_1_field        = "@(data|where)"
+  decorate_1_name         = ValidateNested
+  decorate_1_from         = "class-validator"
+  decorate_1_arguments    = "[]"
 }
 
 model User {
@@ -35,4 +46,49 @@ model User {
   /// @Validator.MinLength(8)
   /// @HideField()
   password String
+}
+
+model HomeBlock {
+  id String @id @default(uuid())
+
+  /// @Validator.IsString()
+  /// @Validator.MaxLength(100)
+  /// @Validator.MinLength(3)
+  title String
+
+  /// @Validator.IsString()
+  /// @Validator.MaxLength(100)
+  /// @Validator.MinLength(3)
+  imagePath String
+
+  /// @Validator.IsString()
+  /// @Validator.MaxLength(100)
+  /// @Validator.MinLength(3)
+  navigationPath String
+
+  rgbBackground   RgbBackground @relation(fields: [rgbBackgroundId], references: [id]) // references `id` of `RgbBackground`
+  rgbBackgroundId String        @unique // relation scalar field (used in the `@relation` attribute above)
+}
+
+model RgbBackground {
+  id String @id @default(uuid())
+
+  /// @Validator.IsInt()
+  /// @Validator.Min(0)
+  /// @Validator.Max(255)
+  r Int
+
+  /// @Validator.IsInt()
+  /// @Validator.Min(0)
+  /// @Validator.Max(255)
+  g Int
+
+  /// @Validator.IsInt()
+  /// @Validator.Min(0)
+  /// @Validator.Max(255)
+  b Int
+
+  a Float?
+
+  homeBlock HomeBlock?
 }
