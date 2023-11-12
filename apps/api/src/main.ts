@@ -6,31 +6,28 @@
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
-import {
-  FastifyAdapter,
-  NestFastifyApplication,
-} from '@nestjs/platform-fastify';
+import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import helmet from '@fastify/helmet';
+import { apiEnv } from './environments/environments';
+
+const { isProd, api } = apiEnv;
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestFastifyApplication>(
-    AppModule,
-    new FastifyAdapter()
-  );
-  //TODO contentSecurityPolicy should be turn on in production
+  const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
   await app.register(helmet, {
-    contentSecurityPolicy: false,
+    contentSecurityPolicy: isProd
   });
 
   app.enableCors();
 
   const globalPrefix = 'graphiql';
   app.setGlobalPrefix(globalPrefix);
-  const port = process.env.PORT || 3333;
-  await app.listen(port);
+
+  await app.listen(api.port);
   Logger.log(
-    `🚀 Application playground is running on: http://localhost:${port}/${globalPrefix}`
+    `🚀 Application playground is running on: http://localhost:${api.port}/${globalPrefix}`
   );
 }
 
-bootstrap();
+// eslint-disable-next-line unicorn/prefer-top-level-await
+bootstrap().catch(console.log);

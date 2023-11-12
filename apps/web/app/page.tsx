@@ -1,13 +1,11 @@
+import { User } from '@full-stack/web/data-access-graphql';
 import { gql } from '../data-access/graphql-client';
 
 export default async function Index() {
   const { users } = await gql.GetUsers();
 
-  return users.map((user) => (
-    <figure
-      key={user.id}
-      className="bg-slate-100 rounded-xl p-8 dark:bg-slate-800"
-    >
+  return users.map((user: User) => (
+    <figure key={user.id} className="bg-slate-100 rounded-xl p-8 dark:bg-slate-800">
       <img
         className="w-24 h-24 rounded-full mx-auto"
         src={`https://i.pravatar.cc/150?u=${user.id}`}
@@ -18,9 +16,8 @@ export default async function Index() {
       <div className="pt-6 text-center space-y-4">
         <blockquote>
           <p className="text-xs">
-            “Tailwind CSS is the only framework that I've seen scale on large
-            teams. It’s easy to customize, adapts to any design, and the build
-            size is tiny.”
+            “Tailwind CSS is the only framework that I&apos;ve seen scale on large teams. It&apos;s
+            easy to customize, adapts to any design, and the build size is tiny.”
           </p>
         </blockquote>
         <figcaption className="font-medium">
