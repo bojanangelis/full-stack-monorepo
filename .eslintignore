@@ -2,6 +2,7 @@
 libs/api/generated-db-types/src/lib/index.ts
 libs/web/data-access-graphql/src/lib/data-access.gql.gen.ts
 libs/web/data-access-graphql/src/lib/types.ts
+tools/graphql-schema/schema.gql
 
 /node_modules
 /dist
