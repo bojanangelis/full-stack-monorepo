@@ -6,6 +6,7 @@
     "comhome",
     "digitaloceanspaces",
     "Fastify",
-    "graphiql"
+    "graphiql",
+    "localematcher"
   ]
 }

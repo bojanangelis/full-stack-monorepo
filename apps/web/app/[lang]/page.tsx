@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import { gql } from '../data-access/graphql-client';
-import { webEnv } from '../environments/environment';
+import { gql } from '../../data-access/graphql-client';
+import { webEnv } from '../../environments/environment';
 import Link from 'next/link';
 import { rgbToDataUrl } from '@full-stack/web/utils-shared';
 
