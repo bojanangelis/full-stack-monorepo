@@ -3,6 +3,9 @@ import './global.css';
 import { Lato } from '@next/font/google';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Locale, i18n } from '../../i18n/i18n-config';
+import { getDictionary } from '../../i18n/get-dictionary';
+import LocaleSwitcher from '../../components/locale-switcher';
 
 export const metadata = {
   title: 'full-stack-monorepo',
@@ -16,9 +19,20 @@ const lato = Lato({
   subsets: ['latin']
 });
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export async function generateStaticParams() {
+  return i18n.locales.map((locale) => ({ lang: locale }));
+}
+
+export default async function RootLayout({
+  children,
+  params
+}: {
+  children: ReactNode;
+  params: { lang: Locale };
+}) {
+  const { navBar } = await getDictionary(params.lang);
   return (
-    <html lang="en" className={lato.className}>
+    <html lang={params.lang} className={lato.className}>
       <body>
         <div className="mx-auto max-w-screen-2xl">
           <div className="mx-6 md:mx-14">
@@ -31,13 +45,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 className="md:h-5 md:w-28"
               />
 
-              <div className="flex gap-10">
+              <div className="flex gap-10 items-center">
                 <Link href={'/menu'} className="text-xs uppercase text-black">
-                  Menu
+                  {navBar.menu}
                 </Link>
                 <Link href={'/cart'} className="text-xs uppercase text-black">
-                  Cart
+                  {navBar.cart}
                 </Link>
+                <LocaleSwitcher />
               </div>
             </nav>
             {children}
