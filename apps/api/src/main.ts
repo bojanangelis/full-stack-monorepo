@@ -12,6 +12,8 @@ import { apiEnv } from './environments/environments';
 
 const { isProd, api } = apiEnv;
 
+const runHost = isProd ? '0.0.0.0' : 'localhost';
+
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
   await app.register(helmet, {
@@ -23,7 +25,7 @@ async function bootstrap() {
   const globalPrefix = 'graphiql';
   app.setGlobalPrefix(globalPrefix);
 
-  await app.listen(api.port);
+  await app.listen(api.port, runHost);
   Logger.log(
     `🚀 Application playground is running on: http://localhost:${api.port}/${globalPrefix}`
   );
