@@ -20,9 +20,17 @@
     "db:seed:clear": "npx env-cmd -f .env ts-node --project tools/tsconfig.tools.json tools/database/seed-clear-database.ts",
     "db:seed:dev": "npx env-cmd -f .env ts-node --project tools/tsconfig.tools.json tools/database/seed.dev.ts",
     "------VALIDATE ENV SECTION------": "------------",
-    "verify": "nx show projects && nx format:write && nx format:check && nx affected --target=lint --fix --parallel=3 && npx nx affected --target=test --parallel=3 && nx affected --target=build --parallel=3 --exclude=web",
     "validate:web-env": "npx env-cmd -f .env ts-node --project tools/tsconfig.tools.json tools/environment/validate-web-env.ts",
-    "validate:api-env": "npx env-cmd -f .env ts-node --project tools/tsconfig.tools.json tools/environment/validate-api-env.ts"
+    "validate:api-env": "npx env-cmd -f .env ts-node --project tools/tsconfig.tools.json tools/environment/validate-api-env.ts",
+    "------TOOLS SECTION------": "------------",
+    "verify": "nx show projects && nx format:write && nx format:check && nx affected --target=lint --fix --parallel=3 && npx nx affected --target=test --parallel=3 && nx affected --target=build --parallel=3 --exclude=web",
+    "-----DEPLOY SECTION----": "-----------------------",
+    "cd:api": "yarn run cd:validate-api && yarn run cd:db-push && yarn run cd:db-seed && npx nx build api --prod",
+    "cd:web": "yarn run cd:validate-web && npx nx build web --prod",
+    "cd:validate-api": "npx ts-node --project tools/tsconfig.tools.json tools/environment/validate-api-env.ts",
+    "cd:validate-web": "npx ts-node --project tools/tsconfig.tools.json tools/environment/validate-web-env.ts",
+    "cd:db-push": "npx prisma db push --accept-data-loss",
+    "cd:db-seed": "npx ts-node --project tools/tsconfig.tools.json tools/database/seed.dev.ts"
   },
   "prisma": {
     "schema": "libs/api/data-access-db/src/lib/prisma/schema.prisma"
