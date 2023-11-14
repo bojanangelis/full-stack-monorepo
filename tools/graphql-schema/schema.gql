@@ -4,84 +4,164 @@
 
 type HomeBlockCountAggregate {
   id: Int!
-  title: Int!
-  imagePath: Int!
   navigationPath: Int!
-  rgbBackgroundId: Int!
+  imageId: Int!
   _all: Int!
 }
 
 type HomeBlockMaxAggregate {
   id: String
-  title: String
-  imagePath: String
   navigationPath: String
-  rgbBackgroundId: String
+  imageId: String
 }
 
 type HomeBlockMinAggregate {
   id: String
-  title: String
-  imagePath: String
   navigationPath: String
-  rgbBackgroundId: String
+  imageId: String
 }
 
 type HomeBlock {
   id: ID!
-  title: String!
-  imagePath: String!
   navigationPath: String!
-  rgbBackgroundId: String!
-  rgbBackground: RgbBackground!
+  imageId: String!
+  image: Image!
 }
 
-type RgbBackgroundAvgAggregate {
+type ImageCountAggregate {
+  id: Int!
+  title: Int!
+  imagePath: Int!
+  rgbBackgroundId: Int!
+  _all: Int!
+}
+
+type ImageMaxAggregate {
+  id: String
+  title: String
+  imagePath: String
+  rgbBackgroundId: String
+}
+
+type ImageMinAggregate {
+  id: String
+  title: String
+  imagePath: String
+  rgbBackgroundId: String
+}
+
+type Image {
+  id: ID!
+  title: String
+  imagePath: String!
+  rgbBackgroundId: String!
+  rgbBackground: RgbColor!
+}
+
+type ProductAvgAggregate {
+  price: Float
+  discountPrice: Float
+}
+
+type ProductCountAggregate {
+  id: Int!
+  name: Int!
+  price: Int!
+  discountPrice: Int!
+  _all: Int!
+}
+
+type ProductCount {
+  images: Int!
+  availableColors: Int!
+}
+
+type ProductMaxAggregate {
+  id: String
+  name: String
+  price: Int
+  discountPrice: Int
+}
+
+type ProductMinAggregate {
+  id: String
+  name: String
+  price: Int
+  discountPrice: Int
+}
+
+type ProductSumAggregate {
+  price: Int
+  discountPrice: Int
+}
+
+type Product {
+  id: ID!
+  name: String!
+
+  """
+  @Validator.@IsInt()
+  @Validator.@Min(1)
+  @Validator.@Max(100_000)
+  """
+  price: Int!
+
+  """
+  @Validator.@IsInt()
+  @Validator.@Min(1)
+  @Validator.@Max(100_000)
+  """
+  discountPrice: Int
+  images: [Image!]
+  availableColors: [RgbColor!]
+  _count: ProductCount!
+}
+
+type RgbColorAvgAggregate {
   r: Float
   g: Float
   b: Float
-  a: Float
 }
 
-type RgbBackgroundCountAggregate {
+type RgbColorCountAggregate {
   id: Int!
   r: Int!
   g: Int!
   b: Int!
-  a: Int!
   _all: Int!
 }
 
-type RgbBackgroundMaxAggregate {
+type RgbColorCount {
+  Image: Int!
+}
+
+type RgbColorMaxAggregate {
   id: String
   r: Int
   g: Int
   b: Int
-  a: Float
 }
 
-type RgbBackgroundMinAggregate {
+type RgbColorMinAggregate {
   id: String
   r: Int
   g: Int
   b: Int
-  a: Float
 }
 
-type RgbBackgroundSumAggregate {
+type RgbColorSumAggregate {
   r: Int
   g: Int
   b: Int
-  a: Float
 }
 
-type RgbBackground {
+type RgbColor {
   id: ID!
   r: Int!
   g: Int!
   b: Int!
-  a: Float
-  homeBlock: HomeBlock
+  Image: [Image!]
+  _count: RgbColorCount!
 }
 
 type UserCountAggregate {
@@ -111,32 +191,31 @@ type User {
 
 type Query {
   users: [User!]!
-  findOne(where: HomeBlockWhereUniqueInput!): HomeBlock!
+  findOne(where: UserWhereUniqueInput!): User!
   homeBlocks: [HomeBlock!]!
+  homeBlock(where: HomeBlockWhereUniqueInput!): HomeBlock!
+  products: [Product!]!
+  product(where: ProductWhereUniqueInput!): Product!
 }
 
-input HomeBlockWhereUniqueInput {
+input UserWhereUniqueInput {
   id: String
-  rgbBackgroundId: String
-  AND: [HomeBlockWhereInput!]
-  OR: [HomeBlockWhereInput!]
-  NOT: [HomeBlockWhereInput!]
-  title: StringFilter
-  imagePath: StringFilter
-  navigationPath: StringFilter
-  rgbBackground: RgbBackgroundRelationFilter
+  email: String
+  AND: [UserWhereInput!]
+  OR: [UserWhereInput!]
+  NOT: [UserWhereInput!]
+  name: StringFilter
+  password: StringFilter
 }
 
-input HomeBlockWhereInput {
-  AND: [HomeBlockWhereInput!]
-  OR: [HomeBlockWhereInput!]
-  NOT: [HomeBlockWhereInput!]
+input UserWhereInput {
+  AND: [UserWhereInput!]
+  OR: [UserWhereInput!]
+  NOT: [UserWhereInput!]
   id: StringFilter
-  title: StringFilter
-  imagePath: StringFilter
-  navigationPath: StringFilter
-  rgbBackgroundId: StringFilter
-  rgbBackground: RgbBackgroundRelationFilter
+  email: StringFilter
+  name: StringFilter
+  password: StringFilter
 }
 
 input StringFilter {
@@ -159,21 +238,62 @@ enum QueryMode {
   insensitive
 }
 
-input RgbBackgroundRelationFilter {
-  is: RgbBackgroundWhereInput
-  isNot: RgbBackgroundWhereInput
+input HomeBlockWhereUniqueInput {
+  id: String
+  imageId: String
+  AND: [HomeBlockWhereInput!]
+  OR: [HomeBlockWhereInput!]
+  NOT: [HomeBlockWhereInput!]
+  navigationPath: StringFilter
+  image: ImageRelationFilter
 }
 
-input RgbBackgroundWhereInput {
-  AND: [RgbBackgroundWhereInput!]
-  OR: [RgbBackgroundWhereInput!]
-  NOT: [RgbBackgroundWhereInput!]
+input HomeBlockWhereInput {
+  AND: [HomeBlockWhereInput!]
+  OR: [HomeBlockWhereInput!]
+  NOT: [HomeBlockWhereInput!]
+  id: StringFilter
+  navigationPath: StringFilter
+  imageId: StringFilter
+  image: ImageRelationFilter
+}
+
+input ImageRelationFilter {
+  is: ImageWhereInput
+  isNot: ImageWhereInput
+}
+
+input ImageWhereInput {
+  AND: [ImageWhereInput!]
+  OR: [ImageWhereInput!]
+  NOT: [ImageWhereInput!]
+  id: StringFilter
+  title: StringFilter
+  imagePath: StringFilter
+  rgbBackgroundId: StringFilter
+  productId: StringFilter
+  rgbBackground: RgbColorRelationFilter
+  homeBlock: HomeBlockRelationFilter
+  product: ProductRelationFilter
+}
+
+input RgbColorRelationFilter {
+  is: RgbColorWhereInput
+  isNot: RgbColorWhereInput
+}
+
+input RgbColorWhereInput {
+  AND: [RgbColorWhereInput!]
+  OR: [RgbColorWhereInput!]
+  NOT: [RgbColorWhereInput!]
   id: StringFilter
   r: IntFilter
   g: IntFilter
   b: IntFilter
   a: FloatFilter
-  homeBlock: HomeBlockRelationFilter
+  productId: StringFilter
+  product: ProductRelationFilter
+  Image: ImageListRelationFilter
 }
 
 input IntFilter {
@@ -198,9 +318,50 @@ input FloatFilter {
   not: FloatFilter
 }
 
+input ProductRelationFilter {
+  is: ProductWhereInput
+  isNot: ProductWhereInput
+}
+
+input ProductWhereInput {
+  AND: [ProductWhereInput!]
+  OR: [ProductWhereInput!]
+  NOT: [ProductWhereInput!]
+  id: StringFilter
+  name: StringFilter
+  price: IntFilter
+  discountPrice: IntFilter
+  images: ImageListRelationFilter
+  availableColors: RgbColorListRelationFilter
+}
+
+input ImageListRelationFilter {
+  every: ImageWhereInput
+  some: ImageWhereInput
+  none: ImageWhereInput
+}
+
+input RgbColorListRelationFilter {
+  every: RgbColorWhereInput
+  some: RgbColorWhereInput
+  none: RgbColorWhereInput
+}
+
 input HomeBlockRelationFilter {
   is: HomeBlockWhereInput
   isNot: HomeBlockWhereInput
+}
+
+input ProductWhereUniqueInput {
+  id: String
+  name: String
+  AND: [ProductWhereInput!]
+  OR: [ProductWhereInput!]
+  NOT: [ProductWhereInput!]
+  price: IntFilter
+  discountPrice: IntFilter
+  images: ImageListRelationFilter
+  availableColors: RgbColorListRelationFilter
 }
 
 type Mutation {
@@ -210,6 +371,9 @@ type Mutation {
   createHomeBlock(data: HomeBlockCreateInput!): HomeBlock!
   updateHomeBlock(data: HomeBlockUpdateInput!, where: HomeBlockWhereUniqueInput!): HomeBlock!
   removeHomeBlock(where: HomeBlockWhereUniqueInput!): HomeBlock!
+  createProduct(data: ProductCreateInput!): Product!
+  updateProduct(data: ProductUpdateInput!, where: ProductWhereUniqueInput!): Product!
+  removeProduct(where: ProductWhereUniqueInput!): Product!
 }
 
 input UserCreateInput {
@@ -226,41 +390,214 @@ input UserUpdateInput {
   password: String
 }
 
-input UserWhereUniqueInput {
-  id: String
-  email: String
-  AND: [UserWhereInput!]
-  OR: [UserWhereInput!]
-  NOT: [UserWhereInput!]
-  name: StringFilter
-  password: StringFilter
-}
-
-input UserWhereInput {
-  AND: [UserWhereInput!]
-  OR: [UserWhereInput!]
-  NOT: [UserWhereInput!]
-  id: StringFilter
-  email: StringFilter
-  name: StringFilter
-  password: StringFilter
-}
-
 input HomeBlockCreateInput {
   id: String
-  title: String!
-  imagePath: String!
   navigationPath: String!
-  rgbBackground: RgbBackgroundCreateNestedOneWithoutHomeBlockInput!
+  image: ImageCreateNestedOneWithoutHomeBlockInput!
 }
 
-input RgbBackgroundCreateNestedOneWithoutHomeBlockInput {
-  create: RgbBackgroundCreateWithoutHomeBlockInput
-  connectOrCreate: RgbBackgroundCreateOrConnectWithoutHomeBlockInput
-  connect: RgbBackgroundWhereUniqueInput
+input ImageCreateNestedOneWithoutHomeBlockInput {
+  create: ImageCreateWithoutHomeBlockInput
+  connectOrCreate: ImageCreateOrConnectWithoutHomeBlockInput
+  connect: ImageWhereUniqueInput
 }
 
-input RgbBackgroundCreateWithoutHomeBlockInput {
+input ImageCreateWithoutHomeBlockInput {
+  id: String
+  title: String
+  imagePath: String!
+  rgbBackground: RgbColorCreateNestedOneWithoutImageInput!
+  product: ProductCreateNestedOneWithoutImagesInput
+}
+
+input RgbColorCreateNestedOneWithoutImageInput {
+  create: RgbColorCreateWithoutImageInput
+  connectOrCreate: RgbColorCreateOrConnectWithoutImageInput
+  connect: RgbColorWhereUniqueInput
+}
+
+input RgbColorCreateWithoutImageInput {
+  id: String
+  r: Int!
+  g: Int!
+  b: Int!
+  a: Float
+  product: ProductCreateNestedOneWithoutAvailableColorsInput
+}
+
+input ProductCreateNestedOneWithoutAvailableColorsInput {
+  create: ProductCreateWithoutAvailableColorsInput
+  connectOrCreate: ProductCreateOrConnectWithoutAvailableColorsInput
+  connect: ProductWhereUniqueInput
+}
+
+input ProductCreateWithoutAvailableColorsInput {
+  id: String
+  name: String!
+  price: Int!
+  discountPrice: Int
+  images: ImageCreateNestedManyWithoutProductInput
+}
+
+input ImageCreateNestedManyWithoutProductInput {
+  create: [ImageCreateWithoutProductInput!]
+  connectOrCreate: [ImageCreateOrConnectWithoutProductInput!]
+  createMany: ImageCreateManyProductInputEnvelope
+  connect: [ImageWhereUniqueInput!]
+}
+
+input ImageCreateWithoutProductInput {
+  id: String
+  title: String
+  imagePath: String!
+  rgbBackground: RgbColorCreateNestedOneWithoutImageInput!
+  homeBlock: HomeBlockCreateNestedOneWithoutImageInput
+}
+
+input HomeBlockCreateNestedOneWithoutImageInput {
+  create: HomeBlockCreateWithoutImageInput
+  connectOrCreate: HomeBlockCreateOrConnectWithoutImageInput
+  connect: HomeBlockWhereUniqueInput
+}
+
+input HomeBlockCreateWithoutImageInput {
+  id: String
+  navigationPath: String!
+}
+
+input HomeBlockCreateOrConnectWithoutImageInput {
+  where: HomeBlockWhereUniqueInput!
+  create: HomeBlockCreateWithoutImageInput!
+}
+
+input ImageCreateOrConnectWithoutProductInput {
+  where: ImageWhereUniqueInput!
+  create: ImageCreateWithoutProductInput!
+}
+
+input ImageWhereUniqueInput {
+  id: String
+  AND: [ImageWhereInput!]
+  OR: [ImageWhereInput!]
+  NOT: [ImageWhereInput!]
+  title: StringFilter
+  imagePath: StringFilter
+  rgbBackgroundId: StringFilter
+  productId: StringFilter
+  rgbBackground: RgbColorRelationFilter
+  homeBlock: HomeBlockRelationFilter
+  product: ProductRelationFilter
+}
+
+input ImageCreateManyProductInputEnvelope {
+  data: [ImageCreateManyProductInput!]!
+  skipDuplicates: Boolean
+}
+
+input ImageCreateManyProductInput {
+  id: String
+  title: String
+  imagePath: String!
+  rgbBackgroundId: String!
+}
+
+input ProductCreateOrConnectWithoutAvailableColorsInput {
+  where: ProductWhereUniqueInput!
+  create: ProductCreateWithoutAvailableColorsInput!
+}
+
+input RgbColorCreateOrConnectWithoutImageInput {
+  where: RgbColorWhereUniqueInput!
+  create: RgbColorCreateWithoutImageInput!
+}
+
+input RgbColorWhereUniqueInput {
+  id: String
+  AND: [RgbColorWhereInput!]
+  OR: [RgbColorWhereInput!]
+  NOT: [RgbColorWhereInput!]
+  r: IntFilter
+  g: IntFilter
+  b: IntFilter
+  a: FloatFilter
+  productId: StringFilter
+  product: ProductRelationFilter
+  Image: ImageListRelationFilter
+}
+
+input ProductCreateNestedOneWithoutImagesInput {
+  create: ProductCreateWithoutImagesInput
+  connectOrCreate: ProductCreateOrConnectWithoutImagesInput
+  connect: ProductWhereUniqueInput
+}
+
+input ProductCreateWithoutImagesInput {
+  id: String
+  name: String!
+  price: Int!
+  discountPrice: Int
+  availableColors: RgbColorCreateNestedManyWithoutProductInput
+}
+
+input RgbColorCreateNestedManyWithoutProductInput {
+  create: [RgbColorCreateWithoutProductInput!]
+  connectOrCreate: [RgbColorCreateOrConnectWithoutProductInput!]
+  createMany: RgbColorCreateManyProductInputEnvelope
+  connect: [RgbColorWhereUniqueInput!]
+}
+
+input RgbColorCreateWithoutProductInput {
+  id: String
+  r: Int!
+  g: Int!
+  b: Int!
+  a: Float
+  Image: ImageCreateNestedManyWithoutRgbBackgroundInput
+}
+
+input ImageCreateNestedManyWithoutRgbBackgroundInput {
+  create: [ImageCreateWithoutRgbBackgroundInput!]
+  connectOrCreate: [ImageCreateOrConnectWithoutRgbBackgroundInput!]
+  createMany: ImageCreateManyRgbBackgroundInputEnvelope
+  connect: [ImageWhereUniqueInput!]
+}
+
+input ImageCreateWithoutRgbBackgroundInput {
+  id: String
+  title: String
+  imagePath: String!
+  homeBlock: HomeBlockCreateNestedOneWithoutImageInput
+  product: ProductCreateNestedOneWithoutImagesInput
+}
+
+input ImageCreateOrConnectWithoutRgbBackgroundInput {
+  where: ImageWhereUniqueInput!
+  create: ImageCreateWithoutRgbBackgroundInput!
+}
+
+input ImageCreateManyRgbBackgroundInputEnvelope {
+  data: [ImageCreateManyRgbBackgroundInput!]!
+  skipDuplicates: Boolean
+}
+
+input ImageCreateManyRgbBackgroundInput {
+  id: String
+  title: String
+  imagePath: String!
+  productId: String
+}
+
+input RgbColorCreateOrConnectWithoutProductInput {
+  where: RgbColorWhereUniqueInput!
+  create: RgbColorCreateWithoutProductInput!
+}
+
+input RgbColorCreateManyProductInputEnvelope {
+  data: [RgbColorCreateManyProductInput!]!
+  skipDuplicates: Boolean
+}
+
+input RgbColorCreateManyProductInput {
   id: String
   r: Int!
   g: Int!
@@ -268,46 +605,296 @@ input RgbBackgroundCreateWithoutHomeBlockInput {
   a: Float
 }
 
-input RgbBackgroundCreateOrConnectWithoutHomeBlockInput {
-  where: RgbBackgroundWhereUniqueInput!
-  create: RgbBackgroundCreateWithoutHomeBlockInput!
+input ProductCreateOrConnectWithoutImagesInput {
+  where: ProductWhereUniqueInput!
+  create: ProductCreateWithoutImagesInput!
 }
 
-input RgbBackgroundWhereUniqueInput {
-  id: String
-  AND: [RgbBackgroundWhereInput!]
-  OR: [RgbBackgroundWhereInput!]
-  NOT: [RgbBackgroundWhereInput!]
-  r: IntFilter
-  g: IntFilter
-  b: IntFilter
-  a: FloatFilter
-  homeBlock: HomeBlockRelationFilter
+input ImageCreateOrConnectWithoutHomeBlockInput {
+  where: ImageWhereUniqueInput!
+  create: ImageCreateWithoutHomeBlockInput!
 }
 
 input HomeBlockUpdateInput {
   id: String
+  navigationPath: String
+  image: ImageUpdateOneRequiredWithoutHomeBlockNestedInput
+}
+
+input ImageUpdateOneRequiredWithoutHomeBlockNestedInput {
+  create: ImageCreateWithoutHomeBlockInput
+  connectOrCreate: ImageCreateOrConnectWithoutHomeBlockInput
+  upsert: ImageUpsertWithoutHomeBlockInput
+  connect: ImageWhereUniqueInput
+  update: ImageUpdateToOneWithWhereWithoutHomeBlockInput
+}
+
+input ImageUpsertWithoutHomeBlockInput {
+  update: ImageUpdateWithoutHomeBlockInput!
+  create: ImageCreateWithoutHomeBlockInput!
+  where: ImageWhereInput
+}
+
+input ImageUpdateWithoutHomeBlockInput {
+  id: String
   title: String
   imagePath: String
+  rgbBackground: RgbColorUpdateOneRequiredWithoutImageNestedInput
+  product: ProductUpdateOneWithoutImagesNestedInput
+}
+
+input RgbColorUpdateOneRequiredWithoutImageNestedInput {
+  create: RgbColorCreateWithoutImageInput
+  connectOrCreate: RgbColorCreateOrConnectWithoutImageInput
+  upsert: RgbColorUpsertWithoutImageInput
+  connect: RgbColorWhereUniqueInput
+  update: RgbColorUpdateToOneWithWhereWithoutImageInput
+}
+
+input RgbColorUpsertWithoutImageInput {
+  update: RgbColorUpdateWithoutImageInput!
+  create: RgbColorCreateWithoutImageInput!
+  where: RgbColorWhereInput
+}
+
+input RgbColorUpdateWithoutImageInput {
+  id: String
+  r: Int
+  g: Int
+  b: Int
+  a: Float
+  product: ProductUpdateOneWithoutAvailableColorsNestedInput
+}
+
+input ProductUpdateOneWithoutAvailableColorsNestedInput {
+  create: ProductCreateWithoutAvailableColorsInput
+  connectOrCreate: ProductCreateOrConnectWithoutAvailableColorsInput
+  upsert: ProductUpsertWithoutAvailableColorsInput
+  disconnect: ProductWhereInput
+  delete: ProductWhereInput
+  connect: ProductWhereUniqueInput
+  update: ProductUpdateToOneWithWhereWithoutAvailableColorsInput
+}
+
+input ProductUpsertWithoutAvailableColorsInput {
+  update: ProductUpdateWithoutAvailableColorsInput!
+  create: ProductCreateWithoutAvailableColorsInput!
+  where: ProductWhereInput
+}
+
+input ProductUpdateWithoutAvailableColorsInput {
+  id: String
+  name: String
+  price: Int
+  discountPrice: Int
+  images: ImageUpdateManyWithoutProductNestedInput
+}
+
+input ImageUpdateManyWithoutProductNestedInput {
+  create: [ImageCreateWithoutProductInput!]
+  connectOrCreate: [ImageCreateOrConnectWithoutProductInput!]
+  upsert: [ImageUpsertWithWhereUniqueWithoutProductInput!]
+  createMany: ImageCreateManyProductInputEnvelope
+  set: [ImageWhereUniqueInput!]
+  disconnect: [ImageWhereUniqueInput!]
+  delete: [ImageWhereUniqueInput!]
+  connect: [ImageWhereUniqueInput!]
+  update: [ImageUpdateWithWhereUniqueWithoutProductInput!]
+  updateMany: [ImageUpdateManyWithWhereWithoutProductInput!]
+  deleteMany: [ImageScalarWhereInput!]
+}
+
+input ImageUpsertWithWhereUniqueWithoutProductInput {
+  where: ImageWhereUniqueInput!
+  update: ImageUpdateWithoutProductInput!
+  create: ImageCreateWithoutProductInput!
+}
+
+input ImageUpdateWithoutProductInput {
+  id: String
+  title: String
+  imagePath: String
+  rgbBackground: RgbColorUpdateOneRequiredWithoutImageNestedInput
+  homeBlock: HomeBlockUpdateOneWithoutImageNestedInput
+}
+
+input HomeBlockUpdateOneWithoutImageNestedInput {
+  create: HomeBlockCreateWithoutImageInput
+  connectOrCreate: HomeBlockCreateOrConnectWithoutImageInput
+  upsert: HomeBlockUpsertWithoutImageInput
+  disconnect: HomeBlockWhereInput
+  delete: HomeBlockWhereInput
+  connect: HomeBlockWhereUniqueInput
+  update: HomeBlockUpdateToOneWithWhereWithoutImageInput
+}
+
+input HomeBlockUpsertWithoutImageInput {
+  update: HomeBlockUpdateWithoutImageInput!
+  create: HomeBlockCreateWithoutImageInput!
+  where: HomeBlockWhereInput
+}
+
+input HomeBlockUpdateWithoutImageInput {
+  id: String
   navigationPath: String
-  rgbBackground: RgbBackgroundUpdateOneRequiredWithoutHomeBlockNestedInput
 }
 
-input RgbBackgroundUpdateOneRequiredWithoutHomeBlockNestedInput {
-  create: RgbBackgroundCreateWithoutHomeBlockInput
-  connectOrCreate: RgbBackgroundCreateOrConnectWithoutHomeBlockInput
-  upsert: RgbBackgroundUpsertWithoutHomeBlockInput
-  connect: RgbBackgroundWhereUniqueInput
-  update: RgbBackgroundUpdateToOneWithWhereWithoutHomeBlockInput
+input HomeBlockUpdateToOneWithWhereWithoutImageInput {
+  where: HomeBlockWhereInput
+  data: HomeBlockUpdateWithoutImageInput!
 }
 
-input RgbBackgroundUpsertWithoutHomeBlockInput {
-  update: RgbBackgroundUpdateWithoutHomeBlockInput!
-  create: RgbBackgroundCreateWithoutHomeBlockInput!
-  where: RgbBackgroundWhereInput
+input ImageUpdateWithWhereUniqueWithoutProductInput {
+  where: ImageWhereUniqueInput!
+  data: ImageUpdateWithoutProductInput!
 }
 
-input RgbBackgroundUpdateWithoutHomeBlockInput {
+input ImageUpdateManyWithWhereWithoutProductInput {
+  where: ImageScalarWhereInput!
+  data: ImageUpdateManyMutationInput!
+}
+
+input ImageScalarWhereInput {
+  AND: [ImageScalarWhereInput!]
+  OR: [ImageScalarWhereInput!]
+  NOT: [ImageScalarWhereInput!]
+  id: StringFilter
+  title: StringFilter
+  imagePath: StringFilter
+  rgbBackgroundId: StringFilter
+  productId: StringFilter
+}
+
+input ImageUpdateManyMutationInput {
+  id: String
+  title: String
+  imagePath: String
+}
+
+input ProductUpdateToOneWithWhereWithoutAvailableColorsInput {
+  where: ProductWhereInput
+  data: ProductUpdateWithoutAvailableColorsInput!
+}
+
+input RgbColorUpdateToOneWithWhereWithoutImageInput {
+  where: RgbColorWhereInput
+  data: RgbColorUpdateWithoutImageInput!
+}
+
+input ProductUpdateOneWithoutImagesNestedInput {
+  create: ProductCreateWithoutImagesInput
+  connectOrCreate: ProductCreateOrConnectWithoutImagesInput
+  upsert: ProductUpsertWithoutImagesInput
+  disconnect: ProductWhereInput
+  delete: ProductWhereInput
+  connect: ProductWhereUniqueInput
+  update: ProductUpdateToOneWithWhereWithoutImagesInput
+}
+
+input ProductUpsertWithoutImagesInput {
+  update: ProductUpdateWithoutImagesInput!
+  create: ProductCreateWithoutImagesInput!
+  where: ProductWhereInput
+}
+
+input ProductUpdateWithoutImagesInput {
+  id: String
+  name: String
+  price: Int
+  discountPrice: Int
+  availableColors: RgbColorUpdateManyWithoutProductNestedInput
+}
+
+input RgbColorUpdateManyWithoutProductNestedInput {
+  create: [RgbColorCreateWithoutProductInput!]
+  connectOrCreate: [RgbColorCreateOrConnectWithoutProductInput!]
+  upsert: [RgbColorUpsertWithWhereUniqueWithoutProductInput!]
+  createMany: RgbColorCreateManyProductInputEnvelope
+  set: [RgbColorWhereUniqueInput!]
+  disconnect: [RgbColorWhereUniqueInput!]
+  delete: [RgbColorWhereUniqueInput!]
+  connect: [RgbColorWhereUniqueInput!]
+  update: [RgbColorUpdateWithWhereUniqueWithoutProductInput!]
+  updateMany: [RgbColorUpdateManyWithWhereWithoutProductInput!]
+  deleteMany: [RgbColorScalarWhereInput!]
+}
+
+input RgbColorUpsertWithWhereUniqueWithoutProductInput {
+  where: RgbColorWhereUniqueInput!
+  update: RgbColorUpdateWithoutProductInput!
+  create: RgbColorCreateWithoutProductInput!
+}
+
+input RgbColorUpdateWithoutProductInput {
+  id: String
+  r: Int
+  g: Int
+  b: Int
+  a: Float
+  Image: ImageUpdateManyWithoutRgbBackgroundNestedInput
+}
+
+input ImageUpdateManyWithoutRgbBackgroundNestedInput {
+  create: [ImageCreateWithoutRgbBackgroundInput!]
+  connectOrCreate: [ImageCreateOrConnectWithoutRgbBackgroundInput!]
+  upsert: [ImageUpsertWithWhereUniqueWithoutRgbBackgroundInput!]
+  createMany: ImageCreateManyRgbBackgroundInputEnvelope
+  set: [ImageWhereUniqueInput!]
+  disconnect: [ImageWhereUniqueInput!]
+  delete: [ImageWhereUniqueInput!]
+  connect: [ImageWhereUniqueInput!]
+  update: [ImageUpdateWithWhereUniqueWithoutRgbBackgroundInput!]
+  updateMany: [ImageUpdateManyWithWhereWithoutRgbBackgroundInput!]
+  deleteMany: [ImageScalarWhereInput!]
+}
+
+input ImageUpsertWithWhereUniqueWithoutRgbBackgroundInput {
+  where: ImageWhereUniqueInput!
+  update: ImageUpdateWithoutRgbBackgroundInput!
+  create: ImageCreateWithoutRgbBackgroundInput!
+}
+
+input ImageUpdateWithoutRgbBackgroundInput {
+  id: String
+  title: String
+  imagePath: String
+  homeBlock: HomeBlockUpdateOneWithoutImageNestedInput
+  product: ProductUpdateOneWithoutImagesNestedInput
+}
+
+input ImageUpdateWithWhereUniqueWithoutRgbBackgroundInput {
+  where: ImageWhereUniqueInput!
+  data: ImageUpdateWithoutRgbBackgroundInput!
+}
+
+input ImageUpdateManyWithWhereWithoutRgbBackgroundInput {
+  where: ImageScalarWhereInput!
+  data: ImageUpdateManyMutationInput!
+}
+
+input RgbColorUpdateWithWhereUniqueWithoutProductInput {
+  where: RgbColorWhereUniqueInput!
+  data: RgbColorUpdateWithoutProductInput!
+}
+
+input RgbColorUpdateManyWithWhereWithoutProductInput {
+  where: RgbColorScalarWhereInput!
+  data: RgbColorUpdateManyMutationInput!
+}
+
+input RgbColorScalarWhereInput {
+  AND: [RgbColorScalarWhereInput!]
+  OR: [RgbColorScalarWhereInput!]
+  NOT: [RgbColorScalarWhereInput!]
+  id: StringFilter
+  r: IntFilter
+  g: IntFilter
+  b: IntFilter
+  a: FloatFilter
+  productId: StringFilter
+}
+
+input RgbColorUpdateManyMutationInput {
   id: String
   r: Int
   g: Int
@@ -315,7 +902,30 @@ input RgbBackgroundUpdateWithoutHomeBlockInput {
   a: Float
 }
 
-input RgbBackgroundUpdateToOneWithWhereWithoutHomeBlockInput {
-  where: RgbBackgroundWhereInput
-  data: RgbBackgroundUpdateWithoutHomeBlockInput!
+input ProductUpdateToOneWithWhereWithoutImagesInput {
+  where: ProductWhereInput
+  data: ProductUpdateWithoutImagesInput!
+}
+
+input ImageUpdateToOneWithWhereWithoutHomeBlockInput {
+  where: ImageWhereInput
+  data: ImageUpdateWithoutHomeBlockInput!
+}
+
+input ProductCreateInput {
+  id: String
+  name: String!
+  price: Int!
+  discountPrice: Int
+  images: ImageCreateNestedManyWithoutProductInput
+  availableColors: RgbColorCreateNestedManyWithoutProductInput
+}
+
+input ProductUpdateInput {
+  id: String
+  name: String
+  price: Int
+  discountPrice: Int
+  images: ImageUpdateManyWithoutProductNestedInput
+  availableColors: RgbColorUpdateManyWithoutProductNestedInput
 }

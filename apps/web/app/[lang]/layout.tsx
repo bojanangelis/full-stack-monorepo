@@ -33,10 +33,10 @@ export default async function RootLayout({
   const { navBar } = await getDictionary(params.lang);
   return (
     <html lang={params.lang} className={lato.className}>
-      <body>
-        <div className="mx-auto max-w-screen-2xl">
-          <div className="mx-6 md:mx-14">
-            <nav className="flex h-20 items-center justify-between md:h-28 lg:h-36">
+      <body className="flex flex-col items-center">
+        <div className="w-full max-w-screen-2xl px-6 md:mx-14">
+          <nav className="flex h-20 items-center justify-between md:h-28 lg:h-36">
+            <Link href={'/'}>
               <Image
                 src={'/logo.svg'}
                 width={85}
@@ -44,19 +44,21 @@ export default async function RootLayout({
                 alt={'logo'}
                 className="md:h-5 md:w-28"
               />
+            </Link>
 
-              <div className="flex gap-10 items-center">
-                <Link href={'/menu'} className="text-xs uppercase text-black">
-                  {navBar.menu}
-                </Link>
-                <Link href={'/cart'} className="text-xs uppercase text-black">
-                  {navBar.cart}
-                </Link>
-                <LocaleSwitcher />
-              </div>
-            </nav>
-            {children}
-          </div>
+            <div className="flex gap-10 items-center">
+              <Link href={'/menu'} className="text-xs uppercase text-black">
+                {navBar.menu}
+              </Link>
+              <Link href={'/cart'} className="text-xs uppercase text-black">
+                {navBar.cart}
+              </Link>
+              <LocaleSwitcher />
+            </div>
+          </nav>
+          {children}
+
+          <footer className="flex h-20 items-center justify-between md:h-28 lg:h-36"></footer>
         </div>
       </body>
     </html>
