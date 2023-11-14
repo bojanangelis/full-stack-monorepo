@@ -7,7 +7,6 @@ import {
   HomeBlock,
   UpdateOneHomeBlockArgs
 } from '@full-stack/api/generated-db-types';
-
 @Resolver(() => HomeBlock)
 export class HomeBlockResolver {
   constructor(private readonly homeBlockService: HomeBlockService) {}
@@ -23,7 +22,7 @@ export class HomeBlockResolver {
   }
 
   @Query(() => HomeBlock)
-  findOne(@Args() findUniqueHomeBlockArgs: FindUniqueHomeBlockArgs) {
+  homeBlock(@Args() findUniqueHomeBlockArgs: FindUniqueHomeBlockArgs) {
     return this.homeBlockService.findOne(findUniqueHomeBlockArgs);
   }
 

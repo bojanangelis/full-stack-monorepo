@@ -14,10 +14,36 @@ export const GET_HOME_BLOCKS_GQL = gql`
   query GetHomeImages {
     homeBlocks {
       id
-      title
-      imagePath
       navigationPath
-      rgbBackground {
+      image {
+        title
+        imagePath
+        rgbBackground {
+          r
+          g
+          b
+        }
+      }
+    }
+  }
+`;
+
+export const GET_PRODUCTS_GQL = gql`
+  query GetProducts {
+    products {
+      name
+      price
+      discountPrice
+      images {
+        title
+        imagePath
+        rgbBackground {
+          r
+          g
+          b
+        }
+      }
+      availableColors {
         r
         g
         b

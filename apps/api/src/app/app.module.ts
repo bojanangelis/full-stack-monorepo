@@ -5,6 +5,7 @@ import { join } from 'node:path';
 import { UserModule } from './user/user.module';
 import { APP_PIPE } from '@nestjs/core';
 import { HomeBlockModule } from './home-block/home-block.module';
+import { ProductModule } from './product/product.module';
 
 const validationProvider = {
   provide: APP_PIPE,
@@ -19,7 +20,8 @@ const validationProvider = {
       autoSchemaFile: join(process.cwd(), 'tools/graphql-schema/schema.gql')
     }),
     UserModule,
-    HomeBlockModule
+    HomeBlockModule,
+    ProductModule
   ],
   providers: [validationProvider]
 })
